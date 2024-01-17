@@ -15,7 +15,7 @@ makeRequest.interceptors.response.use(
     const status = error.response?.status || 500;
     if (status === 401 || status === 403) {
       localStorage.removeItem('user')
-      location.href = '/login'
+      setTimeout(()=>location.href = '/login', 1000)
     } else {
       return Promise.reject(error); // Delegate error to calling side
     }

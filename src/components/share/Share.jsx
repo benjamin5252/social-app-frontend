@@ -80,10 +80,10 @@ const Share = () => {
               <img src={Map} alt="" />
               <span>Add Place</span>
             </div>
-            <div className="item">
+            {/* <div className="item">
               <img src={Friend} alt="" />
               <span>Tag Friends</span>
-            </div>
+            </div> */}
           </div>
           <div className="right">
             <button onClick={handleClick}>Share</button>
