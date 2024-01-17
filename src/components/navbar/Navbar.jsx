@@ -20,13 +20,13 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="left">
-        <Link to="/" style={{ textDecoration: "none" }}>
+        <Link to="/" style={{ textDecoration: "none", cursor: "pointer" }}>
           <span>socialapp</span>
         </Link>
         {darkMode ? (
-          <WbSunnyOutlinedIcon onClick={toggle} />
+          <WbSunnyOutlinedIcon style={{  cursor: "pointer" }} onClick={toggle} />
         ) : (
-          <DarkModeOutlinedIcon onClick={toggle} />
+          <DarkModeOutlinedIcon style={{  cursor: "pointer" }} onClick={toggle} />
         )}
         {/* <div className="search">
           <SearchOutlinedIcon />

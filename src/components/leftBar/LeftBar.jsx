@@ -36,14 +36,14 @@ const LeftBar = () => {
             <span>{currentUser.name}</span>
           </div>
           </Link>
-          <div className="item">
+          {/* <div className="item">
             <img src={Friends} alt="" />
             <span>Friends</span>
           </div>
           <div className="item">
             <img src={Messages} alt="" />
             <span>Messages</span>
-          </div>
+          </div> */}
         </div>
      
         

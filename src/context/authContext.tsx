@@ -6,6 +6,7 @@ interface Props {
   children?: ReactNode
 }
 
+
 export const AuthContextProvider = ({ children }: Props) => {
   
   const [currentUser, setCurrentUser] = useState(
@@ -33,14 +34,14 @@ export const AuthContextProvider = ({ children }: Props) => {
   };
 
   useEffect(() => {
-
-    
       if(currentUser){
         localStorage.setItem("user", JSON.stringify(currentUser));
       }else{
         localStorage.removeItem("user");
       }
   }, [currentUser]);
+
+  
 
 
 
