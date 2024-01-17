@@ -40,7 +40,7 @@ const RightBar = () => {
         setOnlineFriendList(wsMsgObj.onlineFriendList)
       }
     }catch(err){
-
+      console.log(err.message)
     }
     
   }, [wsMessage])
