@@ -23,29 +23,31 @@ const Navbar = () => {
         <Link to="/" style={{ textDecoration: "none" }}>
           <span>socialapp</span>
         </Link>
-        <HomeOutlinedIcon />
         {darkMode ? (
           <WbSunnyOutlinedIcon onClick={toggle} />
         ) : (
           <DarkModeOutlinedIcon onClick={toggle} />
         )}
-        <GridViewOutlinedIcon />
-        <div className="search">
+        {/* <div className="search">
           <SearchOutlinedIcon />
           <input type="text" placeholder="Search..." />
-        </div>
+        </div> */}
       </div>
       <div className="right">
-        <PersonOutlinedIcon />
-        <EmailOutlinedIcon />
+        <Link 
+              to={`/profile/${currentUser.id}`}
+              style={{ textDecoration: "none", color: "inherit", display: 'flex', alignItems: "center" }}
+          >
+          <PersonOutlinedIcon />
+        </Link>
         <NotificationsOutlinedIcon />
-        <div className="user">
+        <div className="user" onClick={()=>{setOptionOpen(!optionOpen)}}>
           <img
-            onClick={()=>{setOptionOpen(!optionOpen)}}
+           
             src={"http://localhost:8000/upload/" +  currentUser.profilePic}
             alt=""
           />
-          <span onClick={()=>{setOptionOpen(!optionOpen)}}>
+          <span d>
             {currentUser.name}
           </span>
           {

@@ -57,7 +57,7 @@ const Share = () => {
         <div className="top">
           <div className="left">
             <img
-              src={currentUser.profilePic}
+              src={"http://localhost:8000/upload/" + currentUser.profilePic}
               alt=""
             />
             <input type="text" placeholder={`What's on your mind ${currentUser.name}?`} value={desc} onChange={(e)=>setDesc(e.target.value)}/>
