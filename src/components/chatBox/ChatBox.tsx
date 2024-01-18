@@ -1,12 +1,14 @@
 import React from 'react';
-import { WebSocketContext } from "../../context/webSocketContext.jsx";
+import { WebSocketContext } from "../../context/webSocketContext";
+import { AuthContext } from '../../context/authContext';
 import { useEffect, useState, useContext } from "react";
 import "./chatBox.scss"
-import { UserObj } from '../../lib/interfaces.js';
+import { UserObj, msgObj } from '../../lib/interfaces.js';
 
 const ChatBox = ({friend, closeChat}: {friend:  UserObj, closeChat: VoidFunction}) => {
   const { wsMessage, wsSentObj, isWsConnected, wsMessageCount } = useContext(WebSocketContext);
-  const [ recievedMsg, setReceivedMsg ] = useState<string[]>([])
+  const { currentUser } = useContext(AuthContext)
+  const [ recievedMsg, setReceivedMsg ] = useState<msgObj[]>([])
   const [ msgToSend, setMsgToSend ] = useState<string>('')
   useEffect(()=>{
 
@@ -15,7 +17,7 @@ const ChatBox = ({friend, closeChat}: {friend:  UserObj, closeChat: VoidFunction
       console.log(wsMsgObj)
       if(wsMsgObj.reply === 'sendChatMessage' && wsMsgObj.message){
         //
-        setReceivedMsg([...recievedMsg, wsMsgObj.message])
+        setReceivedMsg([...recievedMsg, wsMsgObj])
       }
     }catch(err){
       console.log(err.message)
@@ -26,43 +28,42 @@ const ChatBox = ({friend, closeChat}: {friend:  UserObj, closeChat: VoidFunction
 
   const sendMsg = (msg: string)=>{
     if(isWsConnected){
-      wsSentObj({method: 'sendChatMessage', message: msg, to: friend.id})
+      const sendAt = Date.now()
+      if(msg){
+        setReceivedMsg([...recievedMsg, {reply: 'sendChatMessage', message: msg, from: currentUser.id, to: friend.id, sendAt}])
+        wsSentObj({method: 'sendChatMessage', message: msg, from: currentUser.id, to: friend.id, sendAt})
+
+        setMsgToSend('')
+      }
+      
     }
   }
 
-  useEffect(()=>{
-
-    try{
-      const wsMsgObj = JSON.parse(wsMessage)
-      console.log(wsMsgObj)
-      if(wsMsgObj.reply === 'getOnlineUsers' && wsMsgObj.onlineFriendList){
-        //
-      }
-    }catch(err){
-      console.log(err.message)
-    }
-    
-  }, [wsMessage, wsMessageCount])
+ 
 
   return (
     <div className='chatBox'>
-      <div>
-        <div>{friend.name} ({friend.username})</div>
-        <button onClick={()=>closeChat()}>Close</button>
+      <div className='title'>
+        <div className='name'>{friend.name} ({friend.username})</div>
+        <button className='closeBtn' onClick={()=>closeChat()}>X</button>
       </div>
       
-      <div>
+      <div className='history'>
         {/* chat history */}
-        {
-          recievedMsg.map((Msg)=><div>
-            {Msg}
-          </div>)
-        }
+        <div>
+          {
+            recievedMsg.map((Msg)=>
+            <div key={"msg-"+Msg.sendAt} className={Msg.from === currentUser.id ? 'right': 'left'}>
+              <div className='content'>{Msg.message}</div>
+            </div>)
+          }
+        </div>
+        
         
       </div>
-      <div>
-        <input onChange={(e)=>setMsgToSend(e.target.value)} type="text" />
-        <button onClick={()=>sendMsg(msgToSend)}>Send</button>
+      <div className='editor'>
+        <input value={msgToSend} onChange={(e)=>setMsgToSend(e.target.value)} type="text" />
+        <button onClick={()=>sendMsg(msgToSend)}>{"Send >"}</button>
       </div>
     </div>
     

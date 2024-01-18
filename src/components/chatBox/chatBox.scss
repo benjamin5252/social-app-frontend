@@ -2,7 +2,75 @@
 
 .chatBox {
   @include themify($themes) {
+    background-color: themed("bg");
+    padding: 12px;
+    padding-bottom: 0;
+    border-radius: 10px 10px 0px 0px;
     position: fixed;
+    right: 40px;
     bottom: 0;
+    input{
+      all: unset;
+    }
+    button{
+      background: none;
+      color: inherit;
+      border: none;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+      outline: inherit;
+    }
+    .title{
+      display: flex;
+      padding-bottom: 10px;
+      
+      .name{
+        flex: 1;
+      }
+      .closeBtn{
+        
+      }
+    }
+    .history{
+      height: 300px;
+      width: 300px;
+      overflow-y: auto;
+      background-color: themed(bgSoft);
+      display: flex;
+      flex-direction: column-reverse;
+
+      .right, .left{
+        display: flex;
+        
+
+        .content{
+          padding: 8px;
+          margin: 8px;
+          border-radius: 16px;
+          background-color: themed("bg");
+        }
+       
+        
+      }
+
+      .right{
+        flex-direction: row-reverse;
+      }
+    }
+
+    .editor{
+      display: flex;
+
+      input{
+        
+        flex: 1;
+        padding: 4px;
+        margin: 10px;
+        border-radius: 16px;
+        border-color: themed(border);
+        border: 1px solid;
+      }
+    }
   }
 }

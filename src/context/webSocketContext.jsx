@@ -14,8 +14,8 @@ export const WebSocketContextProvider = ({ children }) => {
 
   const handleMessageChange = (event)=>{
     
-    const t = Date.now()
-    setWsMessage(JSON.stringify({...JSON.parse(event.data), t}))
+    
+    setWsMessage(event.data)
     
     
   }
