@@ -42,6 +42,13 @@ const RightBar = () => {
       console.log(wsMsgObj)
       if(wsMsgObj.reply === 'getOnlineUsers' && wsMsgObj.onlineFriendList){
         setOnlineFriendList(wsMsgObj.onlineFriendList)
+      }else if(wsMsgObj.reply === 'sendChatMessage' ){
+        for(const user of data.content){
+          if(user.id === wsMsgObj.from){
+            setUserToChat(user)
+          }
+        }
+       
       }
     }catch(err){
       console.log(err.message)
