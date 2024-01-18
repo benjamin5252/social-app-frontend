@@ -13,7 +13,11 @@ export const WebSocketContextProvider = ({ children }) => {
   const { currentUser } = useContext(AuthContext)
 
   const handleMessageChange = (event)=>{
-    setWsMessage(event.data)
+    
+    const t = Date.now()
+    setWsMessage(JSON.stringify({...JSON.parse(event.data), t}))
+    
+    
   }
 
   const wsSentObj = (msgObj)=>{

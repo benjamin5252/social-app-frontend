@@ -1,12 +1,15 @@
 import "./rightBar.scss";
-import  makeRequest  from "../../axios";
+import  makeRequest  from "../../axios.js";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query"
 import { useEffect, useState, useContext } from "react";
 import { WebSocketContext } from "../../context/webSocketContext.jsx";
+import ChatBox from "../chatBox/ChatBox.js"
+import { UserObj } from "../../lib/interfaces";
 
 const RightBar = () => {
   const [onLineFriendList, setOnlineFriendList] = useState([])
   const { wsMessage, wsSentObj, isWsConnected } = useContext(WebSocketContext);
+  const [isUpdateFriendList, setIsUpdateFriendList] = useState(false)
   const { data, isFetching, error} = useQuery({
     queryKey: ["friendsList"],
     queryFn: () => {
@@ -21,15 +24,16 @@ const RightBar = () => {
   
   useEffect(()=>{
   
-    if(data && data.result){
+    if(data && data.result && !isUpdateFriendList){
       setTimeout(()=>{
         if(isWsConnected){
-          wsSentObj({method: 'getOnlineUserList', friendList: data.content.map(item=>item.followedUserId)})
+          wsSentObj({method: 'updateFriendList', friendList: data.content.map(item=>item.followedUserId)})
+          setIsUpdateFriendList(true)
         }
       }, 1000)
       
     }
-  },[data, isWsConnected, wsSentObj])
+  },[data, isWsConnected, wsSentObj, isUpdateFriendList])
 
   useEffect(()=>{
 
@@ -46,6 +50,10 @@ const RightBar = () => {
   }, [wsMessage])
 
 
+
+  const [userToChat, setUserToChat] = useState<null | UserObj>(null)
+
+
   return (
     <div className="rightBar">
       <div className="container">
@@ -53,7 +61,7 @@ const RightBar = () => {
         <div className="item">
           <span>Online Friends</span>
           {data && data.content && data.content.filter((item)=> onLineFriendList.includes(item.id)).map((item)=>
-          <div key={`online-${item.id}`} className="user">
+          <div onClick={()=>setUserToChat(item)} key={`online-${item.id}`} className="user">
             <div  className="userInfo">
               <img
                 src="https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600"
@@ -66,6 +74,10 @@ const RightBar = () => {
          
         </div>
       </div>
+      { userToChat && 
+        <ChatBox friend={userToChat} closeChat={()=>setUserToChat(null)} />
+      }
+      
     </div>
   );
 };

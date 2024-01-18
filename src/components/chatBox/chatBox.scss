@@ -1,0 +1,8 @@
+@import "../../style.scss";
+
+.chatBox {
+  @include themify($themes) {
+    position: fixed;
+    bottom: 0;
+  }
+}
