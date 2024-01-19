@@ -9,6 +9,7 @@
     position: fixed;
     right: 40px;
     bottom: 0;
+    width: 300px;
     input{
       all: unset;
     }
@@ -24,17 +25,18 @@
     .title{
       display: flex;
       padding-bottom: 10px;
-      
+     
       .name{
         flex: 1;
       }
-      .closeBtn{
-        
+      button{
+        font-size: x-large;
+        margin-left: 10px;
       }
     }
     .history{
       height: 300px;
-      width: 300px;
+     
       overflow-y: auto;
       background-color: themed(bgSoft);
       display: flex;
@@ -42,9 +44,18 @@
 
       .right, .left{
         display: flex;
+        img {
+          margin: 4px;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
         
 
         .content{
+          max-width: 60%;
+          overflow-wrap: break-word;
           padding: 8px;
           margin: 8px;
           border-radius: 16px;
@@ -70,6 +81,10 @@
         border-radius: 16px;
         border-color: themed(border);
         border: 1px solid;
+      }
+
+      button{
+        margin: 10px;
       }
     }
   }

@@ -71,7 +71,7 @@ const RightBar = () => {
           <div onClick={()=>setUserToChat(item)} key={`online-${item.id}`} className="user">
             <div  className="userInfo">
               <img
-                src="https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                src={"http://localhost:8000/upload/" +  item.profilePic}
                 alt=""
               />
               <div className="online" />

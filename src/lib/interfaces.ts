@@ -1,6 +1,6 @@
 export interface UserObj {
   name: string,
-  userName: string,
+  username: string,
   id: number,
   profilePic: string
 }
