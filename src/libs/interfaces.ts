@@ -1,3 +1,5 @@
+import { ReactNode } from "react"
+
 export interface UserObj {
   name: string,
   username: string,
@@ -11,4 +13,8 @@ export interface msgObj {
   from: number,
   to: number,
   sendAt: number
+}
+
+export interface ContextProviderProps {
+  children: ReactNode
 }

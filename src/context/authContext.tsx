@@ -1,13 +1,18 @@
-import { createContext, useEffect, useState, ReactNode } from "react";
+import { createContext, useEffect, useState } from "react";
 import axios from 'axios'
-export const AuthContext = createContext();
 
-interface Props {
-  children?: ReactNode
+import { UserObj, ContextProviderProps } from "../libs/interfaces";
+
+
+interface AuthContextInterface {
+  currentUser: UserObj | null,
+  login: (inputs: { username: string; password: string;}) => Promise<string>,
+  logout: ()=> void
 }
 
+export const AuthContext = createContext<AuthContextInterface | null>(null);
 
-export const AuthContextProvider = ({ children }: Props) => {
+export const AuthContextProvider = ({ children }: ContextProviderProps) => {
   
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(localStorage.getItem("user") || 'null') 
@@ -42,16 +47,6 @@ export const AuthContextProvider = ({ children }: Props) => {
   }, [currentUser]);
 
   
-
-
-
-  // useEffect(()=>{
-    
-  //   if(!isWsConnected){
-  //     connect()
-  //   }
-    
-  // }, [])
 
   return (
     <AuthContext.Provider value={{ currentUser, login, logout }}>
