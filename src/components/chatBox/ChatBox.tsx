@@ -1,9 +1,9 @@
-import React from "react";
-import { WebSocketContext } from "../../context/webSocketContext";
-import { AuthContext } from "../../context/authContext";
-import { useEffect, useState, useContext } from "react";
-import "./chatBox.scss";
-import { UserObj, msgObj } from "../../libs/interfaces.js";
+import React from 'react';
+import { WebSocketContext } from '../../context/webSocketContext';
+import { AuthContext } from '../../context/authContext';
+import { useEffect, useState, useContext } from 'react';
+import './chatBox.scss';
+import { UserObj, msgObj } from '../../libs/interfaces.js';
 
 const ChatBox = ({
   friend,
@@ -16,13 +16,13 @@ const ChatBox = ({
     useContext(WebSocketContext);
   const { currentUser } = useContext(AuthContext);
   const [recievedMsg, setReceivedMsg] = useState<msgObj[]>([]);
-  const [msgToSend, setMsgToSend] = useState<string>("");
+  const [msgToSend, setMsgToSend] = useState<string>('');
   const [isMinimized, setIsMinimized] = useState(false);
   useEffect(() => {
     try {
       const wsMsgObj = JSON.parse(wsMessage);
       console.log(wsMsgObj);
-      if (wsMsgObj.reply === "sendChatMessage" && wsMsgObj.message) {
+      if (wsMsgObj.reply === 'sendChatMessage' && wsMsgObj.message) {
         //
         setReceivedMsg([...recievedMsg, wsMsgObj]);
       }
@@ -38,7 +38,7 @@ const ChatBox = ({
         setReceivedMsg([
           ...recievedMsg,
           {
-            reply: "sendChatMessage",
+            reply: 'sendChatMessage',
             message: msg,
             from: currentUser.id,
             to: friend.id,
@@ -46,14 +46,14 @@ const ChatBox = ({
           },
         ]);
         wsSentObj({
-          method: "sendChatMessage",
+          method: 'sendChatMessage',
           message: msg,
           from: currentUser.id,
           to: friend.id,
           sendAt,
         });
 
-        setMsgToSend("");
+        setMsgToSend('');
       }
     }
   };
@@ -70,7 +70,7 @@ const ChatBox = ({
           :
           <button onClick={() => setIsMinimized(true)}>_</button>
         } */}
-        
+
         <button onClick={() => closeChat()}>x</button>
       </div>
       {!isMinimized && (
@@ -80,12 +80,12 @@ const ChatBox = ({
             <div>
               {recievedMsg.map((Msg) => (
                 <div
-                  key={"msg-" + Msg.sendAt}
-                  className={Msg.from === currentUser.id ? "right" : "left"}
+                  key={'msg-' + Msg.sendAt}
+                  className={Msg.from === currentUser.id ? 'right' : 'left'}
                 >
                   {!(Msg.from === currentUser.id) && (
                     <img
-                      src={"http://localhost:8000/upload/" + friend.profilePic}
+                      src={'http://localhost:8000/upload/' + friend.profilePic}
                       alt=""
                     />
                   )}
@@ -101,7 +101,7 @@ const ChatBox = ({
               onChange={(e) => setMsgToSend(e.target.value)}
               type="text"
             />
-            <button onClick={() => sendMsg(msgToSend)}>{"Send >"}</button>
+            <button onClick={() => sendMsg(msgToSend)}>{'Send >'}</button>
           </div>
         </>
       )}

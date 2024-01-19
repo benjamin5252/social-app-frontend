@@ -1,66 +1,66 @@
-import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/authContext";
+import { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/authContext';
 
-import "./login.scss";
-
-
+import './login.scss';
 
 const Login = () => {
-  
-  
   const [inputs, setInputs] = useState({
-    username: "",
-    password: "",
-  })
+    username: '',
+    password: '',
+  });
 
-  const handleChange = (e) =>{
-    setInputs(prev=>({
+  const handleChange = (e) => {
+    setInputs((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
-    }))
-  }
-
-
-  const [err, setErr] = useState(null)
-  const { login } = useContext(AuthContext);
-  const navigate = useNavigate()
-  const handleLogin = async (e) => {
-    e.preventDefault()
-    try{
-      await login(inputs)
-      
-      navigate("/")
-    }catch(err){
-      console.log(err)
-      setErr(err.response.data.message)
-    }
-
+      [e.target.name]: e.target.value,
+    }));
   };
 
-  
+  const [err, setErr] = useState(null);
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await login(inputs);
 
-  
+      navigate('/');
+    } catch (err) {
+      console.log(err);
+      setErr(err.response.data.message);
+    }
+  };
+
   return (
     <div className="login">
       <div className="card">
-       
         <div className="right">
           <h1>Login</h1>
           <form>
-            <input type="text" placeholder="Username" name="username" onChange={handleChange}/>
-            <input type="password" placeholder="Password" name="password" onChange={handleChange}/>
+            <input
+              type="text"
+              placeholder="Username"
+              name="username"
+              onChange={handleChange}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              onChange={handleChange}
+            />
             <button onClick={handleLogin}>Login</button>
           </form>
-          {err && <>
-            <div>
-              {err}
-            </div>
-          </>}
+          {err && (
+            <>
+              <div>{err}</div>
+            </>
+          )}
           <div className="orLine">
             <div className="line"></div>
             <div>or</div>
-            <div  className="line"></div>
+            <div className="line"></div>
           </div>
           <div>
             {/* <span>Don't you have an account?</span> */}
@@ -69,9 +69,7 @@ const Login = () => {
                 <button>Register</button>
               </Link>
             </div>
-            
           </div>
-          
         </div>
       </div>
     </div>

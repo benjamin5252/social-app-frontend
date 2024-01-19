@@ -1,6 +1,5 @@
-@import "../../style.scss";
+@import '../../style.scss';
 .register {
-
   height: 100vh;
   background-color: #0096d6;
   display: flex;
@@ -34,22 +33,21 @@
       justify-content: center;
 
       h1 {
-      color: #555;
+        color: #555;
       }
-      
+
       form {
         display: flex;
         flex-direction: column;
         gap: 30px;
-        
-        input {
-        border: none;
-        border-bottom: 1px solid lightgray;
-        padding: 20px 10px;
-        }
-        
-        button {
 
+        input {
+          border: none;
+          border-bottom: 1px solid lightgray;
+          padding: 20px 10px;
+        }
+
+        button {
           padding: 10px;
           border: none;
           background-color: #0096d6;

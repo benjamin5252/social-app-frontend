@@ -1,14 +1,13 @@
-@import "../../style.scss";
+@import '../../style.scss';
 
-
-.userOption{
-    @include themify($themes) {
+.userOption {
+  @include themify($themes) {
     padding: 20px;
     border-radius: 10px;
     position: absolute;
     top: 50px;
     right: 0px;
-    background: themed("bg");
+    background: themed('bg');
     text-align: center;
     -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
     -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
@@ -19,5 +18,5 @@
     gap: 16px;
     width: fit-content;
     white-space: nowrap;
-    }
+  }
 }

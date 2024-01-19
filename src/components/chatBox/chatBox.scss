@@ -1,8 +1,8 @@
-@import "../../style.scss";
+@import '../../style.scss';
 
 .chatBox {
   @include themify($themes) {
-    background-color: themed("bg");
+    background-color: themed('bg');
     padding: 12px;
     padding-bottom: 0;
     border-radius: 10px 10px 0px 0px;
@@ -10,10 +10,10 @@
     right: 40px;
     bottom: 0;
     width: 300px;
-    input{
+    input {
       all: unset;
     }
-    button{
+    button {
       background: none;
       color: inherit;
       border: none;
@@ -22,27 +22,28 @@
       cursor: pointer;
       outline: inherit;
     }
-    .title{
+    .title {
       display: flex;
       padding-bottom: 10px;
-     
-      .name{
+
+      .name {
         flex: 1;
       }
-      button{
+      button {
         font-size: x-large;
         margin-left: 10px;
       }
     }
-    .history{
+    .history {
       height: 300px;
-     
+
       overflow-y: auto;
       background-color: themed(bgSoft);
       display: flex;
       flex-direction: column-reverse;
 
-      .right, .left{
+      .right,
+      .left {
         display: flex;
         img {
           margin: 4px;
@@ -51,30 +52,26 @@
           border-radius: 50%;
           object-fit: cover;
         }
-        
 
-        .content{
+        .content {
           max-width: 60%;
           overflow-wrap: break-word;
           padding: 8px;
           margin: 8px;
           border-radius: 16px;
-          background-color: themed("bg");
+          background-color: themed('bg');
         }
-       
-        
       }
 
-      .right{
+      .right {
         flex-direction: row-reverse;
       }
     }
 
-    .editor{
+    .editor {
       display: flex;
 
-      input{
-        
+      input {
         flex: 1;
         padding: 4px;
         margin: 10px;
@@ -83,7 +80,7 @@
         border: 1px solid;
       }
 
-      button{
+      button {
         margin: 10px;
       }
     }

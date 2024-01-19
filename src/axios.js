@@ -1,11 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 
-const makeRequest = axios
-.create({
-  baseURL: "http://localhost:8000/api/",
+const makeRequest = axios.create({
+  baseURL: 'http://localhost:8000/api/',
   withCredentials: true,
-})
-  
+});
+
 makeRequest.interceptors.response.use(
   (response) => {
     return response;
@@ -14,12 +13,12 @@ makeRequest.interceptors.response.use(
     // Anything except 2XX goes to here
     const status = error.response?.status || 500;
     if (status === 401 || status === 403) {
-      localStorage.removeItem('user')
-      setTimeout(()=>location.href = '/login', 1000)
+      localStorage.removeItem('user');
+      setTimeout(() => (location.href = '/login'), 1000);
     } else {
       return Promise.reject(error); // Delegate error to calling side
     }
-  }
+  },
 );
 
 export default makeRequest;

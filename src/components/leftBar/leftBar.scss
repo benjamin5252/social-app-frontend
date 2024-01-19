@@ -1,4 +1,4 @@
-@import "../../style.scss";
+@import '../../style.scss';
 
 .leftBar {
   @include themify($themes) {
@@ -7,10 +7,10 @@
     top: 70px;
     height: calc(100vh - 70px);
     overflow: scroll;
-    background-color: themed("bg");
-    color: themed("textColor");
+    background-color: themed('bg');
+    color: themed('textColor');
 
-    @include mobile{
+    @include mobile {
       display: none;
     }
 
@@ -25,7 +25,7 @@
         margin: 20px 0px;
         border: none;
         height: 0.5px;
-        background-color: themed("border");
+        background-color: themed('border');
       }
 
       .menu {
