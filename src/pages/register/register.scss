@@ -1,71 +1,36 @@
+@import "../../style.scss";
 .register {
+
   height: 100vh;
-  background-color: rgb(193, 190, 255);
+  background-color: #0096d6;
   display: flex;
   align-items: center;
   justify-content: center;
 
   .card {
-    max-width: 70%;
-    width: 600px;
+    width: 50%;
     display: flex;
-    flex-direction: row-reverse;
     background-color: white;
     border-radius: 10px;
     min-height: 600px;
     overflow: hidden;
     button {
-      width: 50%;
+      border-radius: 4px;
+      width: 100%;
       padding: 10px;
       border: none;
       background-color: white;
       border: 1px solid #b5b5b5;
-      color: rebeccapurple;
+      color: #0096d6;
       font-weight: bold;
       cursor: pointer;
     }
-
-    // .left {
-    //   flex: 1;
-    //   background: linear-gradient(rgba(39, 11, 96, 0.5), rgba(39, 11, 96, 0.5)),
-    //     url("https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600")
-    //       center;
-    //   background-size: cover;
-    //   padding: 50px;
-    //   display: flex;
-    //   flex-direction: column;
-    //   gap: 30px;
-    //   color: white;
-
-    //   h1 {
-    //     font-size: 100px;
-    //     line-height: 100px;
-    //   }
-      
-    //   p {
-    //   }
-
-    //   span {
-    //     font-size: 14px;
-    //   }
-      
-    //   button {
-    //     width: 50%;
-    //     padding: 10px;
-    //     border: none;
-    //     background-color: white;
-    //     color: rebeccapurple;
-    //     font-weight: bold;
-    //     cursor: pointer;
-    //   }
-    // }
-
     .right {
       flex: 1;
       padding: 50px;
       display: flex;
       flex-direction: column;
-      gap: 50px;
+      gap: 40px;
       justify-content: center;
 
       h1 {
@@ -84,15 +49,35 @@
         }
         
         button {
-          width: 50%;
+
           padding: 10px;
           border: none;
-          background-color: #938eef;
+          background-color: #0096d6;
           color: white;
-          font-weight: bold;
-          cursor: pointer;
         }
       }
+      .orLine {
+        display: flex;
+        align-items: center;
+        .line {
+          flex: 1;
+          background-color: black;
+          height: 1px;
+          margin: 10px;
+        }
+      }
+    }
+  }
+
+  @include mobile {
+    .card {
+      width: 90%;
+    }
+  }
+
+  @include tablet {
+    .card {
+      width: 90%;
     }
   }
 }

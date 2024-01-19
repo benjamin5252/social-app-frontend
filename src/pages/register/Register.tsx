@@ -48,7 +48,11 @@ const Register = () => {
               {err}
             </div>
           </>}
-          <div>or</div>
+          <div className="orLine">
+            <div className="line"></div>
+            <div>or</div>
+            <div  className="line"></div>
+          </div>
           
           <Link to="/login">
             <button>Login</button>
