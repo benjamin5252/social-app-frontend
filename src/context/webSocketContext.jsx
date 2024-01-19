@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState, useContext, useRef } from "react";
 import { AuthContext } from "./authContext";
-import { ws, wsConnect } from "../websocket.ts"
+import { ws, wsConnect } from "../libs/websocket"
 
 export const WebSocketContext = createContext();
 

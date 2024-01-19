@@ -4,7 +4,7 @@ import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query"
 import { useEffect, useState, useContext } from "react";
 import { WebSocketContext } from "../../context/webSocketContext.jsx";
 import ChatBox from "../chatBox/ChatBox.js"
-import { UserObj } from "../../lib/interfaces";
+import { UserObj } from "../../libs/interfaces.js";
 
 const RightBar = () => {
   const [onLineFriendList, setOnlineFriendList] = useState([])

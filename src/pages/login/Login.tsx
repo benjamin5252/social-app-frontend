@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 
@@ -28,7 +28,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault()
     try{
-      const resLogin = await login(inputs)
+      await login(inputs)
       
       navigate("/")
     }catch(err){
@@ -57,8 +57,10 @@ const Login = () => {
               {err}
             </div>
           </>}
-          <div>
-            or
+          <div className="orLine">
+            <div className="line"></div>
+            <div>or</div>
+            <div  className="line"></div>
           </div>
           <div>
             {/* <span>Don't you have an account?</span> */}

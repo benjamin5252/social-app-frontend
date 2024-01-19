@@ -3,7 +3,7 @@ import { WebSocketContext } from "../../context/webSocketContext";
 import { AuthContext } from "../../context/authContext";
 import { useEffect, useState, useContext } from "react";
 import "./chatBox.scss";
-import { UserObj, msgObj } from "../../lib/interfaces.js";
+import { UserObj, msgObj } from "../../libs/interfaces.js";
 
 const ChatBox = ({
   friend,
