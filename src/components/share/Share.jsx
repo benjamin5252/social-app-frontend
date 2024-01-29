@@ -6,6 +6,7 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import makeRequest from '../../axios';
+import DefaultProfile from '../../assets/user_profile.jpg'
 
 const Share = () => {
   const [file, setFile] = useState(null);
@@ -52,8 +53,8 @@ const Share = () => {
         <div className="top">
           <div className="left">
             <img
-              src={'http://localhost:8000/upload/' + currentUser.profilePic}
-              alt=""
+              src={ currentUser.profilePic ? 'http://localhost:8000/upload/' + currentUser.profilePic : DefaultProfile}
+              alt="DefaultProfile"
             />
             <input
               type="text"

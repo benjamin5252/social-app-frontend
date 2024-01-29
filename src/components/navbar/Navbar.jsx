@@ -1,8 +1,6 @@
 import './navbar.scss';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
-import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
@@ -12,6 +10,7 @@ import { useContext, useState } from 'react';
 import { DarkModeContext } from '../../context/darkModeContext';
 import { AuthContext } from '../../context/authContext';
 import UserOption from '../userOption/UserOption';
+import DefaultProfile from '../../assets/user_profile.jpg'
 
 const Navbar = () => {
   const { toggle, darkMode } = useContext(DarkModeContext);
@@ -56,7 +55,7 @@ const Navbar = () => {
           }}
         >
           <img
-            src={'http://localhost:8000/upload/' + currentUser.profilePic}
+            src={currentUser.profilePic ? 'http://localhost:8000/upload/' + currentUser.profilePic : DefaultProfile}
             alt=""
           />
           <span d>{currentUser.name}</span>

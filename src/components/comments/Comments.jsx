@@ -4,7 +4,8 @@ import { AuthContext } from '../../context/authContext';
 import makeRequest from '../../axios';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import moment from 'moment';
-import userPic from '../../assets/user.jpg';
+import DefaultProfile from '../../assets/user_profile.jpg'
+
 
 const Comments = ({ postId }) => {
   const { currentUser } = useContext(AuthContext);
@@ -39,8 +40,8 @@ const Comments = ({ postId }) => {
     <div className="comments">
       <div className="write">
         <img
-          src={'http://localhost:8000/upload/' + currentUser.profilePic}
-          alt={userPic}
+          src={currentUser.profilePic ? 'http://localhost:8000/upload/' + currentUser.profilePic : DefaultProfile}
+          
         />
         <input
           type="text"
@@ -59,8 +60,8 @@ const Comments = ({ postId }) => {
           : data.content.map((comment) => (
               <div className="comment">
                 <img
-                  src={'http://localhost:8000/upload/' + comment.profilePic}
-                  alt={userPic}
+                  src={comment.profilePic ? 'http://localhost:8000/upload/' + comment.profilePic : DefaultProfile}
+                  
                 />
                 <div className="info">
                   <span>{comment.name}</span>

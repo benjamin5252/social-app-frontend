@@ -4,6 +4,7 @@ import { AuthContext } from '../../context/authContext';
 import { useEffect, useState, useContext } from 'react';
 import './chatBox.scss';
 import { UserObj, msgObj } from '../../libs/interfaces.js';
+import DefaultProfile from '../../assets/user_profile.jpg'
 
 const ChatBox = ({
   friend,
@@ -85,7 +86,7 @@ const ChatBox = ({
                 >
                   {!(Msg.from === currentUser.id) && (
                     <img
-                      src={'http://localhost:8000/upload/' + friend.profilePic}
+                      src={friend.profilePic ? 'http://localhost:8000/upload/' + friend.profilePic : DefaultProfile }
                       alt=""
                     />
                   )}

@@ -11,6 +11,7 @@ import moment from 'moment';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import makeRequest from '../../axios';
 import { AuthContext } from '../../context/authContext';
+import DefaultProfile from '../../assets/user_profile.jpg';
 
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
@@ -63,7 +64,7 @@ const Post = ({ post }) => {
         <div className="user">
           <div className="userInfo">
             <img
-              src={'http://localhost:8000/upload/' + post.profilePic}
+              src={currentUser.profilePic ? 'http://localhost:8000/upload/' + currentUser.profilePic : DefaultProfile}
               alt=""
             />
             <div className="details">
