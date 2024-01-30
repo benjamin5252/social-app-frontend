@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
-
+import { LoadingUiContext } from '../../context/loadingUiContext/loadingUiContext';
 import './login.scss';
 
 const Login = () => {
@@ -19,12 +19,14 @@ const Login = () => {
 
   const [err, setErr] = useState(null);
   const { login } = useContext(AuthContext);
+  const { setMainLoading } = useContext(LoadingUiContext);
   const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      setMainLoading(true);
       await login(inputs);
-
+      setMainLoading(false);
       navigate('/');
     } catch (err) {
       console.log(err);

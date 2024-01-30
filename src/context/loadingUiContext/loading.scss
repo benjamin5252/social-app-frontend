@@ -1,0 +1,17 @@
+.loadingBox {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  opacity: 0.5;
+}
+.contentBox {
+  z-index: 0;
+  position: relative;
+}

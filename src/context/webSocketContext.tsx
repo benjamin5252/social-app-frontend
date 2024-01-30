@@ -1,10 +1,21 @@
-import { createContext, useEffect, useState, useContext, useRef } from 'react';
+import { createContext, useEffect, useState, useContext } from 'react';
 import { AuthContext } from './authContext';
 import { ws, wsConnect } from '../libs/websocket';
+import { ContextProviderProps } from '../libs/interfaces';
 
-export const WebSocketContext = createContext();
+interface WebSocketContextInterface {
+  wsMessage: string;
+  wsSentObj: (input: object) => void;
+  isWsConnected: boolean;
+}
 
-export const WebSocketContextProvider = ({ children }) => {
+export const WebSocketContext = createContext<WebSocketContextInterface | null>(
+  null,
+);
+
+export const WebSocketContextProvider = ({
+  children,
+}: ContextProviderProps) => {
   const [wsMessage, setWsMessage] = useState('');
   const [isWsConnected, setIsWsConnected] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,7 +25,7 @@ export const WebSocketContextProvider = ({ children }) => {
     setWsMessage(event.data);
   };
 
-  const wsSentObj = (msgObj) => {
+  const wsSentObj = (msgObj: object) => {
     if (ws && ws.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify(msgObj));
     }
