@@ -2,6 +2,7 @@ import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import {
   createBrowserRouter,
+  createHashRouter,
   RouterProvider,
   Route,
   Outlet,
@@ -53,37 +54,34 @@ function App() {
     return children;
   };
 
-  const router = createBrowserRouter(
-    [
-      {
-        path: '/',
-        element: (
-          <ProtectedRoute>
-            <Layout />
-          </ProtectedRoute>
-        ),
-        children: [
-          {
-            path: '/',
-            element: <Home />,
-          },
-          {
-            path: '/profile/:id',
-            element: <Profile />,
-          },
-        ],
-      },
-      {
-        path: '/login',
-        element: <Login />,
-      },
-      {
-        path: '/register',
-        element: <Register />,
-      },
-    ],
-    { basename: process.env.BASE },
-  );
+  const router = createHashRouter([
+    {
+      path: '/',
+      element: (
+        <ProtectedRoute>
+          <Layout />
+        </ProtectedRoute>
+      ),
+      children: [
+        {
+          path: '/',
+          element: <Home />,
+        },
+        {
+          path: '/profile/:id',
+          element: <Profile />,
+        },
+      ],
+    },
+    {
+      path: '/login',
+      element: <Login />,
+    },
+    {
+      path: '/register',
+      element: <Register />,
+    },
+  ]);
 
   return (
     <div>
