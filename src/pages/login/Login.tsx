@@ -30,6 +30,7 @@ const Login = () => {
       navigate('/');
     } catch (err) {
       console.log(err);
+      setMainLoading(false);
       setErr(err.response.data.message);
     }
   };
