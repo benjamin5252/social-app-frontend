@@ -54,7 +54,7 @@ function App() {
     return children;
   };
 
-  const router = createBrowserRouter([
+  const router = createHashRouter([
     {
       path: '/',
       element: (
