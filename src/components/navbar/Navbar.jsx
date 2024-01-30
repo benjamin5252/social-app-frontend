@@ -10,7 +10,7 @@ import { useContext, useState } from 'react';
 import { DarkModeContext } from '../../context/darkModeContext';
 import { AuthContext } from '../../context/authContext';
 import UserOption from '../userOption/UserOption';
-import DefaultProfile from '../../assets/user_profile.jpg'
+import DefaultProfile from '../../assets/user_profile.jpg';
 
 const Navbar = () => {
   const { toggle, darkMode } = useContext(DarkModeContext);
@@ -55,10 +55,14 @@ const Navbar = () => {
           }}
         >
           <img
-            src={currentUser.profilePic ? 'http://localhost:8000/upload/' + currentUser.profilePic : DefaultProfile}
+            src={
+              currentUser.profilePic
+                ? 'http://localhost:8000/upload/' + currentUser.profilePic
+                : DefaultProfile
+            }
             alt=""
           />
-          <span d>{currentUser.name}</span>
+          <span>{currentUser.name}</span>
           {optionOpen && <UserOption />}
         </div>
       </div>
