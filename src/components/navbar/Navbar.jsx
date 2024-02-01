@@ -20,7 +20,7 @@ const Navbar = () => {
     <div className="navbar">
       <div className="left">
         <Link to="/" style={{ textDecoration: 'none', cursor: 'pointer' }}>
-          <span>socialapp</span>
+          <span>Yin's Social</span>
         </Link>
         {darkMode ? (
           <WbSunnyOutlinedIcon style={{ cursor: 'pointer' }} onClick={toggle} />
