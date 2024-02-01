@@ -5,6 +5,7 @@ import { useEffect, useState, useContext } from 'react';
 import { WebSocketContext } from '../../context/webSocketContext.jsx';
 import ChatBox from '../chatBox/ChatBox.js';
 import { UserObj } from '../../libs/interfaces.js';
+import DefaultUserPic from '../../assets/user_profile.jpg';
 
 const RightBar = () => {
   const [onLineFriendList, setOnlineFriendList] = useState([]);
@@ -72,7 +73,11 @@ const RightBar = () => {
                 >
                   <div className="userInfo">
                     <img
-                      src={'http://localhost:8000/upload/' + item.profilePic}
+                      src={
+                        item.profilePic
+                          ? 'http://localhost:8000/upload/' + item.profilePic
+                          : DefaultUserPic
+                      }
                       alt=""
                     />
                     <div className="online" />

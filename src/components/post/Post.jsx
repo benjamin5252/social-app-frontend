@@ -64,7 +64,11 @@ const Post = ({ post }) => {
         <div className="user">
           <div className="userInfo">
             <img
-              src={currentUser.profilePic ? 'http://localhost:8000/upload/' + currentUser.profilePic : DefaultProfile}
+              src={
+                currentUser.profilePic
+                  ? 'http://localhost:8000/upload/' + currentUser.profilePic
+                  : DefaultProfile
+              }
               alt=""
             />
             <div className="details">
@@ -84,7 +88,10 @@ const Post = ({ post }) => {
         </div>
         <div className="content">
           <p>{post.desc}</p>
-          <img src={'http://localhost:8000/upload/' + post.img} alt="" />
+          <img
+            src={post.img ? 'http://localhost:8000/upload/' + post.img : ''}
+            alt=""
+          />
         </div>
         <div className="info">
           <div className="item" onClick={handleLike}>
