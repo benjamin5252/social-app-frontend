@@ -15,6 +15,7 @@ import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
 import { useContext, useState } from 'react';
 import Update from '../../components/update/Update';
+import DefaultProfile from '../../assets/user_profile.jpg';
 
 const Profile = () => {
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -60,24 +61,28 @@ const Profile = () => {
   return (
     <div className="profile">
       <div className="images">
-        <img
+        {/* <img
           src={
             isFetching
               ? ''
               : error
                 ? 'Something went wrong'
-                : 'http://localhost:8000/upload/' + data.content.coverPic
+                : data.content.coverPic
+                  ? 'http://localhost:8000/upload/' + data.content.coverPic
+                  : DefaultProfile
           }
           alt=""
           className="cover"
-        />
+        /> */}
         <img
           src={
             isFetching
               ? ''
               : error
                 ? 'Something went wrong'
-                : 'http://localhost:8000/upload/' + data.content.profilePic
+                : data.content.coverPic
+                  ? 'http://localhost:8000/upload/' + data.content.coverPic
+                  : DefaultProfile
           }
           alt=""
           className="profilePic"
