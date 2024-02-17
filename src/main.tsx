@@ -9,15 +9,18 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import { SnackbarProvider } from 'notistack';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <DarkModeContextProvider>
       <AuthContextProvider>
         <WebSocketContextProvider>
-          <LoadingUiContextProvider>
-            <App />
-          </LoadingUiContextProvider>
+          <SnackbarProvider maxSnack={5}>
+            <LoadingUiContextProvider>
+              <App />
+            </LoadingUiContextProvider>
+          </SnackbarProvider>
         </WebSocketContextProvider>
       </AuthContextProvider>
     </DarkModeContextProvider>

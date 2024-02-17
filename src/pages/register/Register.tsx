@@ -2,8 +2,11 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import './register.scss';
+import { useSnackbar } from 'notistack';
 
 const Register = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const [inputs, setInputs] = useState({
     username: '',
     email: '',
@@ -25,8 +28,19 @@ const Register = () => {
 
     try {
       await axios.post('http://localhost:8000/api/auth/register', inputs);
+      enqueueSnackbar('Success', {
+        variant: 'success',
+      });
     } catch (err) {
-      setErr(err.response.data.message);
+      if (Array.isArray(err.response.data.message)) {
+        for (const msg of err.response.data.message) {
+          enqueueSnackbar(msg, {
+            variant: 'error',
+          });
+        }
+      } else {
+        setErr(err.response.data.message);
+      }
     }
   };
   return (
