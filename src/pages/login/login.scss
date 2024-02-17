@@ -14,7 +14,10 @@
     border-radius: 10px;
     min-height: 600px;
     overflow: hidden;
-
+    .error {
+      text-align: center;
+      color: red;
+    }
     button {
       border-radius: 4px;
       width: 100%;

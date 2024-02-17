@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 import './register.scss';
 import { useSnackbar } from 'notistack';
+import { LoadingUiContext } from '../../context/loadingUiContext/loadingUiContext';
 
 const Register = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -15,7 +16,7 @@ const Register = () => {
   });
 
   const [err, setErr] = useState(null);
-
+  const { setMainLoading } = useContext(LoadingUiContext);
   const handleChange = (e) => {
     setInputs((prev) => ({
       ...prev,
@@ -25,7 +26,7 @@ const Register = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-
+    setMainLoading(true);
     try {
       await axios.post('http://localhost:8000/api/auth/register', inputs);
       enqueueSnackbar('Success', {
@@ -42,6 +43,7 @@ const Register = () => {
         setErr(err.response.data.message);
       }
     }
+    setMainLoading(false);
   };
   return (
     <div className="register">
@@ -77,7 +79,7 @@ const Register = () => {
           </form>
           {err && (
             <>
-              <div>{err}</div>
+              <div className="error">{err}</div>
             </>
           )}
           <div className="orLine">

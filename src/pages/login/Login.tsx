@@ -3,8 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
 import { LoadingUiContext } from '../../context/loadingUiContext/loadingUiContext';
 import './login.scss';
+import { useSnackbar } from 'notistack';
 
 const Login = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [inputs, setInputs] = useState({
     username: '',
     password: '',
@@ -26,13 +28,20 @@ const Login = () => {
     try {
       setMainLoading(true);
       await login(inputs);
-      setMainLoading(false);
+
       navigate('/');
     } catch (err) {
-      console.log(err);
-      setMainLoading(false);
-      setErr(err.response.data.message);
+      if (Array.isArray(err.response.data.message)) {
+        for (const msg of err.response.data.message) {
+          enqueueSnackbar(msg, {
+            variant: 'error',
+          });
+        }
+      } else {
+        setErr(err.response.data.message);
+      }
     }
+    setMainLoading(false);
   };
 
   return (
@@ -57,7 +66,7 @@ const Login = () => {
           </form>
           {err && (
             <>
-              <div>{err}</div>
+              <div className="error">{err}</div>
             </>
           )}
           <div className="orLine">
