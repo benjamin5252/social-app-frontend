@@ -28,7 +28,7 @@ const Register = () => {
     e.preventDefault();
     setMainLoading(true);
     try {
-      await axios.post(process.env.API + '/upload/', inputs);
+      await axios.post(process.env.API + '/api/auth/register', inputs);
       enqueueSnackbar('Success', {
         variant: 'success',
       });
