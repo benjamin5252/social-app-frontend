@@ -12,6 +12,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import makeRequest from '../../axios';
 import { AuthContext } from '../../context/authContext';
 import DefaultProfile from '../../assets/user_profile.jpg';
+import TimeoutImg from '../timeoutImg/timeoutImg';
 
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
@@ -71,6 +72,7 @@ const Post = ({ post }) => {
               }
               alt=""
             />
+
             <div className="details">
               <Link
                 to={`/profile/${post.userId}`}
@@ -88,9 +90,12 @@ const Post = ({ post }) => {
         </div>
         <div className="content">
           <p>{post.desc}</p>
-          <img
+          {/* <img
             src={post.img ? 'http://localhost:8000/upload/' + post.img : ''}
             alt=""
+          /> */}
+          <TimeoutImg
+            url={post.img ? 'http://localhost:8000/upload/' + post.img : ''}
           />
         </div>
         <div className="info">

@@ -37,11 +37,10 @@ const Share = () => {
   };
 
   const resizeImageFile = (blob) => {
-    console.log('resize');
-    let blobUrl = URL.createObjectURL(blob);
+    const blobUrl = URL.createObjectURL(blob);
 
     return new Promise((resolve, reject) => {
-      let img = new Image();
+      const img = new Image();
       img.onload = () => resolve(img);
       img.onerror = (err) => reject(err);
       img.src = blobUrl;
@@ -49,7 +48,7 @@ const Share = () => {
       URL.revokeObjectURL(blobUrl);
       // Limit to 256x256px while preserving aspect ratio
       let [w, h] = [img.width, img.height];
-      let aspectRatio = w / h;
+      const aspectRatio = w / h;
       // Say the file is 1920x1080
       // divide max(w,h) by 256 to get factor
 
@@ -83,7 +82,8 @@ const Share = () => {
   const upload = async () => {
     try {
       const formData = new FormData();
-      const resizedFile = await resizeImageFile(file);
+      const resizedBlob = await resizeImageFile(file);
+      const resizedFile = new File([resizedBlob], 'image.png');
       formData.append('file', resizedFile);
       const res = await makeRequest.post('/upload', formData);
       return res.data;
@@ -133,10 +133,10 @@ const Share = () => {
                 <span>Add Image</span>
               </div>
             </label>
-            <div className="item">
+            {/* <div className="item">
               <img src={Map} alt="" />
               <span>Add Place</span>
-            </div>
+            </div> */}
             {/* <div className="item">
               <img src={Friend} alt="" />
               <span>Tag Friends</span>

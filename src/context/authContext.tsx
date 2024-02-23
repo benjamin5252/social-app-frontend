@@ -17,13 +17,9 @@ export const AuthContextProvider = ({ children }: ContextProviderProps) => {
   );
 
   const login = async (inputs: { username: string; password: string }) => {
-    const res = await axios.post(
-      'http://localhost:8000/api/auth/login',
-      inputs,
-      {
-        withCredentials: true,
-      },
-    );
+    const res = await axios.post(process.env.API + '/api/auth/login', inputs, {
+      withCredentials: true,
+    });
     setCurrentUser(res.data.content);
     return res.data;
   };
