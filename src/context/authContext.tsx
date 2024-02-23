@@ -25,7 +25,7 @@ export const AuthContextProvider = ({ children }: ContextProviderProps) => {
   };
 
   const logout = async () => {
-    await axios.post(process.env.API + '/upload/', {
+    await axios.post(process.env.API + '/api/auth/logout', {
       withCredentials: true,
     });
     setCurrentUser(null);
