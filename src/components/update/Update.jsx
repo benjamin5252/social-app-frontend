@@ -65,7 +65,7 @@ export const Update = ({ setOpenUpdate, user }) => {
                   src={
                     cover
                       ? URL.createObjectURL(cover)
-                      : 'http://localhost:8000/upload/' + user.coverPic
+                      : process.env.API + '/upload/' + user.coverPic
                   }
                   alt=""
                 />
@@ -85,7 +85,7 @@ export const Update = ({ setOpenUpdate, user }) => {
                   src={
                     profile
                       ? URL.createObjectURL(profile)
-                      : 'http://localhost:8000/upload/' + user.profilePic
+                      : process.env.API + '/upload/' + user.profilePic
                   }
                   alt=""
                 />

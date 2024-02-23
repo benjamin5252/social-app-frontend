@@ -68,7 +68,7 @@ const Profile = () => {
               : error
                 ? 'Something went wrong'
                 : data.content.coverPic
-                  ? 'http://localhost:8000/upload/' + data.content.coverPic
+                  ? process.env.API + '/upload/' + data.content.coverPic
                   : DefaultProfile
           }
           alt=""
@@ -81,7 +81,7 @@ const Profile = () => {
               : error
                 ? 'Something went wrong'
                 : data.content.coverPic
-                  ? 'http://localhost:8000/upload/' + data.content.coverPic
+                  ? process.env.API + '/upload/' + data.content.coverPic
                   : DefaultProfile
           }
           alt=""

@@ -2,7 +2,7 @@ import './leftBar.scss';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
 import { useContext } from 'react';
-import DefaultProfile from '../../assets/user_profile.jpg'
+import DefaultProfile from '../../assets/user_profile.jpg';
 
 const LeftBar = () => {
   const { currentUser } = useContext(AuthContext);
@@ -17,7 +17,11 @@ const LeftBar = () => {
           >
             <div className="user">
               <img
-                src={currentUser.profilePic ? 'http://localhost:8000/upload/' + currentUser.profilePic : DefaultProfile}
+                src={
+                  currentUser.profilePic
+                    ? process.env.API + '/upload/' + currentUser.profilePic
+                    : DefaultProfile
+                }
                 alt=""
               />
               <span>{currentUser.name}</span>

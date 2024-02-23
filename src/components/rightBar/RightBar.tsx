@@ -75,7 +75,7 @@ const RightBar = () => {
                     <img
                       src={
                         item.profilePic
-                          ? 'http://localhost:8000/upload/' + item.profilePic
+                          ? process.env.API + '/upload/' + item.profilePic
                           : DefaultUserPic
                       }
                       alt=""

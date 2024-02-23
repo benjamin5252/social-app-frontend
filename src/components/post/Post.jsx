@@ -67,7 +67,7 @@ const Post = ({ post }) => {
             <img
               src={
                 currentUser.profilePic
-                  ? 'http://localhost:8000/upload/' + currentUser.profilePic
+                  ? process.env.API + '/upload/' + currentUser.profilePic
                   : DefaultProfile
               }
               alt=""
@@ -91,11 +91,11 @@ const Post = ({ post }) => {
         <div className="content">
           <p>{post.desc}</p>
           {/* <img
-            src={post.img ? 'http://localhost:8000/upload/' + post.img : ''}
+            src={post.img ? process.env.API + '/upload/' + post.img : ''}
             alt=""
           /> */}
           <TimeoutImg
-            url={post.img ? 'http://localhost:8000/upload/' + post.img : ''}
+            url={post.img ? process.env.API + '/upload/' + post.img : ''}
           />
         </div>
         <div className="info">

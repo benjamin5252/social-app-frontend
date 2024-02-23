@@ -100,7 +100,7 @@ const Share = () => {
             <img
               src={
                 currentUser.profilePic
-                  ? 'http://localhost:8000/upload/' + currentUser.profilePic
+                  ? process.env.API + '/upload/' + currentUser.profilePic
                   : DefaultProfile
               }
               alt="DefaultProfile"
