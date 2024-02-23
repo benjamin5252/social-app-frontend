@@ -2,7 +2,7 @@ export let ws: WebSocket | null = null;
 
 export const wsConnect = () =>
   new Promise((resolve, reject) => {
-    ws = new WebSocket('ws://localhost:8000');
+    ws = new WebSocket(process.env.WS);
     ws.onerror = (event) => {
       console.log(event);
     };
