@@ -1,9 +1,4 @@
 import './profile.scss';
-import FacebookTwoToneIcon from '@mui/icons-material/FacebookTwoTone';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import PinterestIcon from '@mui/icons-material/Pinterest';
-import TwitterIcon from '@mui/icons-material/Twitter';
 import PlaceIcon from '@mui/icons-material/Place';
 import LanguageIcon from '@mui/icons-material/Language';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
@@ -13,19 +8,23 @@ import makeRequest from '../../axios';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
-import { useContext, useState } from 'react';
+import { useContext, useState, MouseEvent } from 'react';
 import Update from '../../components/update/Update';
 import DefaultProfile from '../../assets/user_profile.jpg';
+import { AxiosResponse } from 'axios';
 
 const Profile = () => {
   const [openUpdate, setOpenUpdate] = useState(false);
   const { currentUser } = useContext(AuthContext);
 
-  let userId = useParams().id;
-  const { status, data, error, isFetching } = useQuery({
+  const userId = useParams().id;
+
+  const { data, error, isFetching } = useQuery({
     queryKey: ['user'],
     queryFn: () => {
-      return makeRequest.get('/users/find/' + userId).then((res) => res.data);
+      return makeRequest
+        .get('/users/find/' + userId)
+        .then((res: AxiosResponse) => res.data);
     },
   });
 
@@ -34,7 +33,7 @@ const Profile = () => {
     queryFn: () => {
       return makeRequest
         .get('/relationships?followedUserId=' + userId)
-        .then((res) => res.data);
+        .then((res: AxiosResponse) => res.data);
     },
   });
 
@@ -52,8 +51,7 @@ const Profile = () => {
     },
   });
 
-  const handleFollow = (e) => {
-    console.log('handlefollow');
+  const handleFollow = (e: MouseEvent) => {
     e.preventDefault();
     mutation.mutate();
   };

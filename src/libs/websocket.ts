@@ -1,7 +1,7 @@
 export let ws: WebSocket | null = null;
 
 export const wsConnect = () =>
-  new Promise((resolve, reject) => {
+  new Promise((resolve) => {
     ws = new WebSocket(process.env.WS);
     ws.onerror = (event) => {
       console.log(event);

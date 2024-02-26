@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './update.scss';
 import makeRequest from '../../axios';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
@@ -43,8 +43,8 @@ export const Update = ({ setOpenUpdate, user }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let coverUrl;
-    let profileUrl;
+    const coverUrl;
+    const profileUrl;
     coverUrl = cover ? await upload(cover) : user.coverPic;
     profileUrl = profile ? await upload(profile) : user.profilePic;
 

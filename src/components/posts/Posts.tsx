@@ -2,17 +2,17 @@ import Post from '../post/Post';
 import './posts.scss';
 import { useQuery } from '@tanstack/react-query';
 import makeRequest from '../../axios';
-import { useEffect, useState } from 'react';
+import { AxiosResponse } from 'axios';
 
 const Posts = ({ userId }) => {
-  const { status, data, error, isFetching } = useQuery({
+  const { data, error, isFetching } = useQuery({
     queryKey: ['posts'],
     queryFn: () => {
       if (userId)
         return makeRequest
           .get('/posts?userId=' + userId)
           .then((res) => res.data);
-      return makeRequest.get('/posts').then((res) => res.data);
+      return makeRequest.get('/posts').then((res: AxiosResponse) => res.data);
     },
   });
 

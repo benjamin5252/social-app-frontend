@@ -1,27 +1,28 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, MouseEvent } from 'react';
 import './comments.scss';
 import { AuthContext } from '../../context/authContext';
 import makeRequest from '../../axios';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import moment from 'moment';
 import DefaultProfile from '../../assets/user_profile.jpg';
+import { AxiosResponse } from 'axios';
 
 const Comments = ({ postId }) => {
   const { currentUser } = useContext(AuthContext);
 
-  const { status, data, error, isFetching } = useQuery({
+  const { data, error, isFetching } = useQuery({
     queryKey: ['comments'],
     queryFn: () => {
       return makeRequest
         .get('/comments?postId=' + postId)
-        .then((res) => res.data);
+        .then((res: AxiosResponse) => res.data);
     },
   });
 
   const queryClient = useQueryClient();
   const [desc, setDesc] = useState('');
   const mutation = useMutation({
-    mutationFn: (newComment) => {
+    mutationFn: (newComment: { desc: string; postId: string }) => {
       return makeRequest.post('/comments', newComment);
     },
     onSuccess: () => {
@@ -29,7 +30,7 @@ const Comments = ({ postId }) => {
     },
   });
 
-  const handleClick = (e) => {
+  const handleClick = (e: MouseEvent) => {
     e.preventDefault();
     mutation.mutate({ desc, postId });
     setDesc('');
@@ -60,7 +61,7 @@ const Comments = ({ postId }) => {
         : error
           ? 'Something went wrong'
           : data.content.map((comment) => (
-              <div className="comment">
+              <div key={`comment-${comment.id}`} className="comment">
                 <img
                   src={
                     comment.profilePic

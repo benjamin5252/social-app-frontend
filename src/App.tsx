@@ -1,13 +1,10 @@
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import {
-  createBrowserRouter,
   createHashRouter,
   RouterProvider,
-  Route,
   Outlet,
   Navigate,
-  BrowserRouter,
 } from 'react-router-dom';
 import Navbar from './components/navbar/Navbar';
 import LeftBar from './components/leftBar/LeftBar';
@@ -20,7 +17,6 @@ import { DarkModeContext } from './context/darkModeContext';
 import { AuthContext } from './context/authContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './App.scss';
-import { basename } from 'path';
 
 const queryClient = new QueryClient();
 

@@ -1,6 +1,6 @@
 import './rightBar.scss';
 import makeRequest from '../../axios.js';
-import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState, useContext } from 'react';
 import { WebSocketContext } from '../../context/webSocketContext.jsx';
 import ChatBox from '../chatBox/ChatBox.js';
@@ -11,7 +11,7 @@ const RightBar = () => {
   const [onLineFriendList, setOnlineFriendList] = useState([]);
   const { wsMessage, wsSentObj, isWsConnected } = useContext(WebSocketContext);
   const [isUpdateFriendList, setIsUpdateFriendList] = useState(false);
-  const { data, isFetching, error } = useQuery({
+  const { data } = useQuery({
     queryKey: ['friendsList'],
     queryFn: () => {
       const req = makeRequest
@@ -39,7 +39,6 @@ const RightBar = () => {
   useEffect(() => {
     try {
       const wsMsgObj = JSON.parse(wsMessage);
-      console.log(wsMsgObj);
       if (wsMsgObj.reply === 'getOnlineUsers' && wsMsgObj.onlineFriendList) {
         setOnlineFriendList(wsMsgObj.onlineFriendList);
       } else if (wsMsgObj.reply === 'sendChatMessage') {
@@ -52,7 +51,7 @@ const RightBar = () => {
     } catch (err) {
       console.log(err.message);
     }
-  }, [wsMessage]);
+  }, [wsMessage, data]);
 
   const [userToChat, setUserToChat] = useState<null | UserObj>(null);
 

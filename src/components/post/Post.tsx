@@ -2,7 +2,6 @@ import './post.scss';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
-import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Link } from 'react-router-dom';
 import Comments from '../comments/Comments';
@@ -13,11 +12,12 @@ import makeRequest from '../../axios';
 import { AuthContext } from '../../context/authContext';
 import DefaultProfile from '../../assets/user_profile.jpg';
 import TimeoutImg from '../timeoutImg/timeoutImg';
+import { MouseEvent } from 'react';
 
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { status, data, error, isFetching } = useQuery({
+  const { data, error, isFetching } = useQuery({
     queryKey: ['likes', post.id],
     queryFn: () => {
       return makeRequest.get('/likes/' + post.id).then((res) => res.data);
@@ -38,7 +38,7 @@ const Post = ({ post }) => {
     },
   });
 
-  const handleLike = (e) => {
+  const handleLike = (e: MouseEvent) => {
     e.preventDefault();
     mutation.mutate();
   };
@@ -46,7 +46,7 @@ const Post = ({ post }) => {
   const { currentUser } = useContext(AuthContext);
 
   const deleteMutation = useMutation({
-    mutationFn: (posId) => {
+    mutationFn: () => {
       return makeRequest.delete('/posts/' + post.id);
     },
     onSuccess: () => {
@@ -54,7 +54,7 @@ const Post = ({ post }) => {
     },
   });
 
-  const handleDelete = (e) => {
+  const handleDelete = (e: MouseEvent) => {
     e.preventDefault();
     deleteMutation.mutate(post.id);
   };
@@ -118,7 +118,7 @@ const Post = ({ post }) => {
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <TextsmsOutlinedIcon />
-            12 Comments
+            Comments
           </div>
           {/* <div className="item">
             <ShareOutlinedIcon />

@@ -1,4 +1,3 @@
-import React from 'react';
 import { WebSocketContext } from '../../context/webSocketContext';
 import { AuthContext } from '../../context/authContext';
 import { useEffect, useState, useContext } from 'react';
@@ -13,16 +12,14 @@ const ChatBox = ({
   friend: UserObj;
   closeChat: VoidFunction;
 }) => {
-  const { wsMessage, wsSentObj, isWsConnected, wsMessageCount } =
-    useContext(WebSocketContext);
+  const { wsMessage, wsSentObj, isWsConnected } = useContext(WebSocketContext);
   const { currentUser } = useContext(AuthContext);
   const [recievedMsg, setReceivedMsg] = useState<msgObj[]>([]);
   const [msgToSend, setMsgToSend] = useState<string>('');
-  const [isMinimized, setIsMinimized] = useState(false);
+  // const [isMinimized, setIsMinimized] = useState(false);
   useEffect(() => {
     try {
       const wsMsgObj = JSON.parse(wsMessage);
-      console.log(wsMsgObj);
       if (wsMsgObj.reply === 'sendChatMessage' && wsMsgObj.message) {
         //
         setReceivedMsg([...recievedMsg, wsMsgObj]);
@@ -30,7 +27,7 @@ const ChatBox = ({
     } catch (err) {
       console.log(err.message);
     }
-  }, [wsMessage]);
+  }, [wsMessage, recievedMsg]);
 
   const sendMsg = (msg: string) => {
     if (isWsConnected) {
@@ -74,7 +71,8 @@ const ChatBox = ({
 
         <button onClick={() => closeChat()}>x</button>
       </div>
-      {!isMinimized && (
+      {
+        // !isMinimized &&
         <>
           <div className="history">
             {/* chat history */}
@@ -109,7 +107,7 @@ const ChatBox = ({
             <button onClick={() => sendMsg(msgToSend)}>{'Send >'}</button>
           </div>
         </>
-      )}
+      }
     </div>
   );
 };

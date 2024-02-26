@@ -1,10 +1,4 @@
-import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useEffect,
-  useState,
-} from 'react';
+import { Dispatch, SetStateAction, createContext, useState } from 'react';
 import { ContextProviderProps } from '../../libs/interfaces';
 import CircularProgress from '@mui/material/CircularProgress';
 import './loading.scss';

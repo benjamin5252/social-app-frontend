@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 
 interface Props {
   url: string;
@@ -6,16 +6,16 @@ interface Props {
 
 export const TimeoutImg = ({ url }: Props) => {
   const ref = useRef<HTMLImageElement>(null);
-  const [isShow, setIsShow] = useState<boolean>(true);
+
   useEffect(() => {
     const element = ref.current;
     setTimeout(() => {
       if (element && !element.complete) {
-        element.setAttr('src', null);
+        element.src = '';
       }
     }, 5000);
   }, []);
 
-  return <>{isShow && <img ref={ref} src={url} />}</>;
+  return <>{<img ref={ref} src={url} />}</>;
 };
 export default TimeoutImg;

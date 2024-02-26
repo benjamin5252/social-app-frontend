@@ -1,7 +1,6 @@
 import './share.scss';
 import ImageIcon from '../../assets/img.png';
-import Map from '../../assets/map.png';
-import Friend from '../../assets/friend.png';
+// import Map from '../../assets/map.png';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -61,17 +60,13 @@ const Share = () => {
         w = h * aspectRatio;
       }
 
-      // REMINDER
-      // 256x256 = 65536 pixels with 4 channels (RGBA) = 262144 data points for each image
-      // Data is encoded as Uint8ClampedArray with BYTES_PER_ELEMENT = 1
-      // So each images = 262144bytes
-      // 1000 images = 260Mb
-
-      let canvas = document.createElement('canvas');
+      const canvas = document.createElement('canvas');
       canvas.width = w;
       canvas.height = h;
-      let ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, w, h);
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, w, h);
+      }
 
       return new Promise((resolve) => {
         canvas.toBlob(resolve); // implied image/png format
