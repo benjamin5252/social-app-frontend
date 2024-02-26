@@ -6,14 +6,17 @@ interface DarkModeContextInterface {
   toggle: () => void;
 }
 
-export const DarkModeContext = createContext<DarkModeContextInterface | null>(
-  null,
-);
+export const DarkModeContext = createContext<DarkModeContextInterface>({
+  darkMode: false,
+  toggle: () => {},
+});
 
 export const DarkModeContextProvider = ({ children }: ContextProviderProps) => {
-  const [darkMode, setDarkMode] = useState(
-    JSON.parse(localStorage.getItem('darkMode')) || false,
-  );
+  const [darkMode, setDarkMode] = useState(() => {
+    const localData = localStorage.getItem('darkMode');
+    if (localData) return JSON.parse(localData);
+    return false;
+  });
 
   const toggle = () => {
     setDarkMode(!darkMode);

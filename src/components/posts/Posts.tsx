@@ -3,8 +3,13 @@ import './posts.scss';
 import { useQuery } from '@tanstack/react-query';
 import makeRequest from '../../axios';
 import { AxiosResponse } from 'axios';
+import { PostObj } from '../../libs/interfaces';
 
-const Posts = ({ userId }) => {
+interface PostsProps {
+  userId?: number;
+}
+
+const Posts = ({ userId }: PostsProps) => {
   const { data, error, isFetching } = useQuery({
     queryKey: ['posts'],
     queryFn: () => {
@@ -24,7 +29,9 @@ const Posts = ({ userId }) => {
         } else if (isFetching) {
           return 'Loading';
         } else {
-          return data.content.map((post) => <Post post={post} key={post.id} />);
+          return data.content.map((post: PostObj) => (
+            <Post post={post} key={post.id} />
+          ));
         }
       })()}
     </div>

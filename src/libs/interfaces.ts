@@ -4,7 +4,16 @@ export interface UserObj {
   name: string;
   username: string;
   id: number;
-  profilePic: string;
+  profilePic: string | undefined;
+  followedUserId?: string | undefined;
+  coverPic?: string | undefined;
+}
+
+export interface UpdateUserObj {
+  name: string;
+  profilePic: string | undefined;
+  followedUserId?: string | undefined;
+  coverPic?: string | undefined;
 }
 
 export interface msgObj {
@@ -17,4 +26,18 @@ export interface msgObj {
 
 export interface ContextProviderProps {
   children: ReactNode;
+}
+
+export interface Props {
+  children: ReactNode;
+  // any props that come into the component
+}
+
+export interface PostObj {
+  id: string;
+  userId: number;
+  img: string;
+  name: string;
+  createdAt: string;
+  desc: string;
 }

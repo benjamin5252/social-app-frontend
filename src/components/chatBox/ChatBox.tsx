@@ -14,7 +14,7 @@ const ChatBox = ({
 }) => {
   const { wsMessage, wsSentObj, isWsConnected } = useContext(WebSocketContext);
   const { currentUser } = useContext(AuthContext);
-  const [recievedMsg, setReceivedMsg] = useState<msgObj[]>([]);
+  const [receivedMsg, setReceivedMsg] = useState<msgObj[]>([]);
   const [msgToSend, setMsgToSend] = useState<string>('');
   // const [isMinimized, setIsMinimized] = useState(false);
   useEffect(() => {
@@ -22,19 +22,23 @@ const ChatBox = ({
       const wsMsgObj = JSON.parse(wsMessage);
       if (wsMsgObj.reply === 'sendChatMessage' && wsMsgObj.message) {
         //
-        setReceivedMsg([...recievedMsg, wsMsgObj]);
+        setReceivedMsg([...receivedMsg, wsMsgObj]);
       }
     } catch (err) {
-      console.log(err.message);
+      let errorMessage = 'Failed to do something exceptional';
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+      console.log(errorMessage);
     }
-  }, [wsMessage, recievedMsg]);
+  }, [wsMessage, receivedMsg]);
 
   const sendMsg = (msg: string) => {
     if (isWsConnected) {
       const sendAt = Date.now();
-      if (msg) {
+      if (msg && currentUser) {
         setReceivedMsg([
-          ...recievedMsg,
+          ...receivedMsg,
           {
             reply: 'sendChatMessage',
             message: msg,
@@ -77,25 +81,26 @@ const ChatBox = ({
           <div className="history">
             {/* chat history */}
             <div>
-              {recievedMsg.map((Msg) => (
-                <div
-                  key={'msg-' + Msg.sendAt}
-                  className={Msg.from === currentUser.id ? 'right' : 'left'}
-                >
-                  {!(Msg.from === currentUser.id) && (
-                    <img
-                      src={
-                        friend.profilePic
-                          ? process.env.API + '/upload/' + friend.profilePic
-                          : DefaultProfile
-                      }
-                      alt=""
-                    />
-                  )}
+              {currentUser &&
+                receivedMsg.map((Msg) => (
+                  <div
+                    key={'msg-' + Msg.sendAt}
+                    className={Msg.from === currentUser.id ? 'right' : 'left'}
+                  >
+                    {!(Msg.from === currentUser.id) && (
+                      <img
+                        src={
+                          friend.profilePic
+                            ? process.env.API + '/upload/' + friend.profilePic
+                            : DefaultProfile
+                        }
+                        alt=""
+                      />
+                    )}
 
-                  <div className="content">{Msg.message}</div>
-                </div>
-              ))}
+                    <div className="content">{Msg.message}</div>
+                  </div>
+                ))}
             </div>
           </div>
           <div className="editor">

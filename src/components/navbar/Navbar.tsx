@@ -34,17 +34,20 @@ const Navbar = () => {
         </div> */}
       </div>
       <div className="right">
-        <Link
-          to={`/profile/${currentUser.id}`}
-          style={{
-            textDecoration: 'none',
-            color: 'inherit',
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <PersonOutlinedIcon />
-        </Link>
+        {currentUser && (
+          <Link
+            to={`/profile/${currentUser.id}`}
+            style={{
+              textDecoration: 'none',
+              color: 'inherit',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <PersonOutlinedIcon />
+          </Link>
+        )}
+
         <NotificationsOutlinedIcon />
         <div
           className="user"
@@ -52,16 +55,20 @@ const Navbar = () => {
             setOptionOpen(!optionOpen);
           }}
         >
-          <img
-            src={
-              currentUser.profilePic
-                ? process.env.API + '/upload/' + currentUser.profilePic
-                : DefaultProfile
-            }
-            alt=""
-          />
-          <span>{currentUser.name}</span>
-          {optionOpen && <UserOption />}
+          {currentUser && (
+            <>
+              <img
+                src={
+                  currentUser.profilePic
+                    ? process.env.API + '/upload/' + currentUser.profilePic
+                    : DefaultProfile
+                }
+                alt=""
+              />
+              <span>{currentUser.name}</span>
+              {optionOpen && <UserOption />}
+            </>
+          )}
         </div>
       </div>
     </div>

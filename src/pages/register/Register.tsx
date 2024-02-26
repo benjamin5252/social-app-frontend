@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useState, useContext, MouseEvent, ChangeEvent } from 'react';
 import axios from 'axios';
 import './register.scss';
 import { useSnackbar } from 'notistack';
@@ -17,14 +17,14 @@ const Register = () => {
 
   const [err, setErr] = useState(null);
   const { setMainLoading } = useContext(LoadingUiContext);
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
 
-  const handleClick = async (e) => {
+  const handleClick = async (e: MouseEvent) => {
     e.preventDefault();
     setMainLoading(true);
     try {
@@ -32,7 +32,15 @@ const Register = () => {
       enqueueSnackbar('Success', {
         variant: 'success',
       });
-    } catch (err) {
+    } catch (err:
+      | any
+      | {
+          response: {
+            data: {
+              message: string | string[];
+            };
+          };
+        }) {
       if (Array.isArray(err.response.data.message)) {
         for (const msg of err.response.data.message) {
           enqueueSnackbar(msg, {

@@ -13,8 +13,13 @@ import { AuthContext } from '../../context/authContext';
 import DefaultProfile from '../../assets/user_profile.jpg';
 import TimeoutImg from '../timeoutImg/timeoutImg';
 import { MouseEvent } from 'react';
+import { PostObj } from '../../libs/interfaces';
 
-const Post = ({ post }) => {
+interface PostProps {
+  post: PostObj;
+}
+
+const Post = ({ post }: PostProps) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { data, error, isFetching } = useQuery({
@@ -27,7 +32,7 @@ const Post = ({ post }) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: () => {
-      if (data.content.includes(currentUser.id)) {
+      if (currentUser && data.content.includes(currentUser.id)) {
         return makeRequest.delete('/likes/' + post.id);
       } else {
         return makeRequest.put('/likes/' + post.id);
@@ -56,78 +61,88 @@ const Post = ({ post }) => {
 
   const handleDelete = (e: MouseEvent) => {
     e.preventDefault();
-    deleteMutation.mutate(post.id);
+    deleteMutation.mutate();
   };
 
   return (
-    <div className="post">
-      <div className="container">
-        <div className="user">
-          <div className="userInfo">
-            <img
-              src={
-                currentUser.profilePic
-                  ? process.env.API + '/upload/' + currentUser.profilePic
-                  : DefaultProfile
-              }
-              alt=""
-            />
+    currentUser && (
+      <div className="post">
+        <div className="container">
+          {currentUser && (
+            <div className="user">
+              <div className="userInfo">
+                <img
+                  src={
+                    currentUser.profilePic
+                      ? process.env.API + '/upload/' + currentUser.profilePic
+                      : DefaultProfile
+                  }
+                  alt=""
+                />
 
-            <div className="details">
-              <Link
-                to={`/profile/${post.userId}`}
-                style={{ textDecoration: 'none', color: 'inherit' }}
-              >
-                <span className="name">{post.name}</span>
-              </Link>
-              <span className="date">{moment(post.createdAt).fromNow()}</span>
+                <div className="details">
+                  <Link
+                    to={`/profile/${post.userId}`}
+                    style={{ textDecoration: 'none', color: 'inherit' }}
+                  >
+                    <span className="name">{post.name}</span>
+                  </Link>
+                  <span className="date">
+                    {moment(post.createdAt).fromNow()}
+                  </span>
+                </div>
+              </div>
+              <MoreHorizIcon onClick={() => setMenuOpen(!menuOpen)} />
+              {currentUser.id === post.userId && menuOpen && (
+                <button onClick={handleDelete}>delete</button>
+              )}
             </div>
-          </div>
-          <MoreHorizIcon onClick={() => setMenuOpen(!menuOpen)} />
-          {currentUser.id === post.userId && menuOpen && (
-            <button onClick={handleDelete}>delete</button>
           )}
-        </div>
-        <div className="content">
-          <p>{post.desc}</p>
-          {/* <img
+
+          <div className="content">
+            <p>{post.desc}</p>
+            {/* <img
             src={post.img ? process.env.API + '/upload/' + post.img : ''}
             alt=""
           /> */}
-          <TimeoutImg
-            url={post.img ? process.env.API + '/upload/' + post.img : ''}
-          />
-        </div>
-        <div className="info">
-          <div className="item" onClick={handleLike}>
-            {isFetching ? (
-              ''
-            ) : error ? (
-              'Something went wrong.'
-            ) : data.content.includes(currentUser.id) ? (
-              <FavoriteOutlinedIcon style={{ color: 'red' }} />
-            ) : (
-              <FavoriteBorderOutlinedIcon />
+            <TimeoutImg
+              url={post.img ? process.env.API + '/upload/' + post.img : ''}
+            />
+          </div>
+          <div className="info">
+            {currentUser && (
+              <div className="item" onClick={handleLike}>
+                {isFetching ? (
+                  ''
+                ) : error ? (
+                  'Something went wrong.'
+                ) : data.content.includes(currentUser.id) ? (
+                  <FavoriteOutlinedIcon style={{ color: 'red' }} />
+                ) : (
+                  <FavoriteBorderOutlinedIcon />
+                )}
+                {isFetching
+                  ? ''
+                  : error
+                    ? 'Something went wrong.'
+                    : data.content.length}{' '}
+                likes
+              </div>
             )}
-            {isFetching
-              ? ''
-              : error
-                ? 'Something went wrong.'
-                : data.content.length}{' '}
-            likes
-          </div>
-          <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
-            <TextsmsOutlinedIcon />
-            Comments
-          </div>
-          {/* <div className="item">
+
+            <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
+              <TextsmsOutlinedIcon />
+              Comments
+            </div>
+            {/* <div className="item">
             <ShareOutlinedIcon />
             Share
           </div> */}
+          </div>
+          {commentOpen && <Comments postId={post.id} />}
         </div>
-        {commentOpen && <Comments postId={post.id} />}
       </div>
-    </div>
+    )
   );
 };
 

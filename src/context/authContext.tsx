@@ -5,11 +5,22 @@ import { UserObj, ContextProviderProps } from '../libs/interfaces';
 
 interface AuthContextInterface {
   currentUser: UserObj | null;
-  login: (inputs: { username: string; password: string }) => Promise<string>;
+  login:
+    | ((inputs: { username: string; password: string }) => Promise<string>)
+    | (() => void);
   logout: () => void;
 }
 
-export const AuthContext = createContext<AuthContextInterface | null>(null);
+export const AuthContext = createContext<AuthContextInterface>({
+  currentUser: {
+    name: '',
+    username: '',
+    profilePic: '',
+    id: 0,
+  },
+  login: () => {},
+  logout: () => {},
+});
 
 export const AuthContextProvider = ({ children }: ContextProviderProps) => {
   const [currentUser, setCurrentUser] = useState(

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, MouseEvent, ChangeEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
 import { LoadingUiContext } from '../../context/loadingUiContext/loadingUiContext';
@@ -12,7 +12,7 @@ const Login = () => {
     password: '',
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
@@ -23,14 +23,14 @@ const Login = () => {
   const { login } = useContext(AuthContext);
   const { setMainLoading } = useContext(LoadingUiContext);
   const navigate = useNavigate();
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: MouseEvent) => {
     e.preventDefault();
     try {
       setMainLoading(true);
       await login(inputs);
 
       navigate('/');
-    } catch (err) {
+    } catch (err: any) {
       if (Array.isArray(err.response.data.message)) {
         for (const msg of err.response.data.message) {
           enqueueSnackbar(msg, {

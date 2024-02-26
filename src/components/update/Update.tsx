@@ -1,26 +1,40 @@
-import { useState } from 'react';
+import {
+  useState,
+  SetStateAction,
+  ChangeEvent,
+  MouseEvent,
+  Dispatch,
+} from 'react';
 import './update.scss';
 import makeRequest from '../../axios';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { UpdateUserObj, UserObj } from '../../libs/interfaces';
 
-export const Update = ({ setOpenUpdate, user }) => {
-  const [cover, setCover] = useState(null);
-  const [profile, setProfile] = useState(null);
+interface UpdateProps {
+  user: UserObj;
+  setOpenUpdate: Dispatch<SetStateAction<boolean>>;
+}
+
+export const Update = ({ setOpenUpdate, user }: UpdateProps) => {
+  // const [cover, setCover] = useState<File | null>(null);
+  const [profile, setProfile] = useState<File | null>(null);
   const [texts, setTexts] = useState({
     name: '',
     city: '',
     website: '',
+    email: '',
+    password: '',
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTexts((prev) => ({
       ...prev,
       [e.target.name]: [e.target.value],
     }));
   };
 
-  const upload = async (file) => {
+  const upload = async (file: File): Promise<string | undefined> => {
     try {
       const formData = new FormData();
       formData.append('file', file);
@@ -33,7 +47,7 @@ export const Update = ({ setOpenUpdate, user }) => {
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: (user) => {
+    mutationFn: (user: UpdateUserObj) => {
       return makeRequest.put('/users', user);
     },
     onSuccess: () => {
@@ -41,12 +55,11 @@ export const Update = ({ setOpenUpdate, user }) => {
     },
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: MouseEvent) => {
     e.preventDefault();
-    const coverUrl = cover ? await upload(cover) : user.coverPic;
+    // const coverUrl = cover ? await upload(cover) : user.coverPic;
     const profileUrl = profile ? await upload(profile) : user.profilePic;
-
-    mutation.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
+    mutation.mutate({ ...texts, profilePic: profileUrl });
     setOpenUpdate(false);
   };
 
@@ -56,7 +69,7 @@ export const Update = ({ setOpenUpdate, user }) => {
         <h1>Update Your Profile</h1>
         <form>
           <div className="files">
-            <label htmlFor="cover">
+            {/* <label htmlFor="cover">
               <span>Cover Picture</span>
               <div className="imgContainer">
                 <img
@@ -75,7 +88,7 @@ export const Update = ({ setOpenUpdate, user }) => {
               id="cover"
               style={{ display: 'none' }}
               onChange={(e) => setCover(e.target.files[0])}
-            />
+            /> */}
             <label htmlFor="profile">
               <span>Profile Picture</span>
               <div className="imgContainer">
@@ -94,7 +107,11 @@ export const Update = ({ setOpenUpdate, user }) => {
               type="file"
               id="profile"
               style={{ display: 'none' }}
-              onChange={(e) => setProfile(e.target.files[0])}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                if (e.target && e.target.files && e.target.files[0]) {
+                  setProfile(e.target.files[0]);
+                }
+              }}
             />
           </div>
           <label>Email</label>

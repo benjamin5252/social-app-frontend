@@ -40,7 +40,7 @@ const Profile = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: () => {
-      if (relationshipData.content.includes(currentUser.id)) {
+      if (currentUser && relationshipData.content.includes(currentUser.id)) {
         return makeRequest.delete('/relationships?followedUserId=' + userId);
       } else {
         return makeRequest.put('/relationships?followedUserId=' + userId);
@@ -57,9 +57,10 @@ const Profile = () => {
   };
 
   return (
-    <div className="profile">
-      <div className="images">
-        {/* <img
+    currentUser && (
+      <div className="profile">
+        <div className="images">
+          {/* <img
           src={
             isFetching
               ? ''
@@ -72,24 +73,24 @@ const Profile = () => {
           alt=""
           className="cover"
         /> */}
-        <img
-          src={
-            isFetching
-              ? ''
-              : error
-                ? 'Something went wrong'
-                : data.content.coverPic
-                  ? process.env.API + '/upload/' + data.content.coverPic
-                  : DefaultProfile
-          }
-          alt=""
-          className="profilePic"
-        />
-      </div>
-      <div className="profileContainer">
-        <div className="uInfo">
-          <div className="left">
-            {/* <a href="http://facebook.com">
+          <img
+            src={
+              isFetching
+                ? ''
+                : error
+                  ? 'Something went wrong'
+                  : data.content.coverPic
+                    ? process.env.API + '/upload/' + data.content.coverPic
+                    : DefaultProfile
+            }
+            alt=""
+            className="profilePic"
+          />
+        </div>
+        <div className="profileContainer">
+          <div className="uInfo">
+            <div className="left">
+              {/* <a href="http://facebook.com">
               <FacebookTwoToneIcon fontSize="large" />
             </a>
             <a href="http://facebook.com">
@@ -104,58 +105,59 @@ const Profile = () => {
             <a href="http://facebook.com">
               <PinterestIcon fontSize="large" />
             </a> */}
-          </div>
-          <div className="center">
-            <span>
-              {isFetching
-                ? ''
-                : error
-                  ? 'Something went wrong'
-                  : data.content.name}
-            </span>
-            <div className="info">
-              <div className="item">
-                <PlaceIcon />
-                <span>
-                  {isFetching
-                    ? ''
-                    : error
-                      ? 'Something went wrong'
-                      : data.content.city}
-                </span>
-              </div>
-              <div className="item">
-                <LanguageIcon />
-                <span>
-                  {isFetching
-                    ? ''
-                    : error
-                      ? 'Something went wrong'
-                      : data.content.website}
-                </span>
-              </div>
             </div>
-            {!rIsFetching &&
-              !isFetching &&
-              (currentUser.id === data?.content?.id ? (
-                <button onClick={() => setOpenUpdate(true)}>Update</button>
-              ) : (
-                <button onClick={handleFollow}>
-                  {relationshipData.content.includes(currentUser.id)
-                    ? 'Following'
-                    : 'Follow'}
-                </button>
-              ))}
+            <div className="center">
+              <span>
+                {isFetching
+                  ? ''
+                  : error
+                    ? 'Something went wrong'
+                    : data.content.name}
+              </span>
+              <div className="info">
+                <div className="item">
+                  <PlaceIcon />
+                  <span>
+                    {isFetching
+                      ? ''
+                      : error
+                        ? 'Something went wrong'
+                        : data.content.city}
+                  </span>
+                </div>
+                <div className="item">
+                  <LanguageIcon />
+                  <span>
+                    {isFetching
+                      ? ''
+                      : error
+                        ? 'Something went wrong'
+                        : data.content.website}
+                  </span>
+                </div>
+              </div>
+              {!rIsFetching &&
+                !isFetching &&
+                (currentUser.id === data?.content?.id ? (
+                  <button onClick={() => setOpenUpdate(true)}>Update</button>
+                ) : (
+                  <button onClick={handleFollow}>
+                    {relationshipData.content.includes(currentUser.id)
+                      ? 'Following'
+                      : 'Follow'}
+                  </button>
+                ))}
+            </div>
+            <div className="right">
+              <EmailOutlinedIcon />
+              <MoreVertIcon />
+            </div>
           </div>
-          <div className="right">
-            <EmailOutlinedIcon />
-            <MoreVertIcon />
-          </div>
+          <Posts userId={userId ? parseInt(userId) : undefined} />
         </div>
-        <Posts userId={userId} />
+        {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={data} />}
       </div>
-      {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={data} />}
-    </div>
+    )
   );
 };
 

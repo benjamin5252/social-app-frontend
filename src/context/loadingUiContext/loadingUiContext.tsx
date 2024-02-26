@@ -4,12 +4,12 @@ import CircularProgress from '@mui/material/CircularProgress';
 import './loading.scss';
 
 interface LoadingUiContextInterface {
-  setMainLoading: Dispatch<SetStateAction<boolean>>;
+  setMainLoading: Dispatch<SetStateAction<boolean>> | (() => void);
 }
 
-export const LoadingUiContext = createContext<LoadingUiContextInterface | null>(
-  null,
-);
+export const LoadingUiContext = createContext<LoadingUiContextInterface>({
+  setMainLoading: () => {},
+});
 
 export const LoadingUiContextProvider = ({
   children,

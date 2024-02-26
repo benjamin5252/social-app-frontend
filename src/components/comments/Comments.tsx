@@ -7,7 +7,19 @@ import moment from 'moment';
 import DefaultProfile from '../../assets/user_profile.jpg';
 import { AxiosResponse } from 'axios';
 
-const Comments = ({ postId }) => {
+export interface commentsProps {
+  postId: string;
+}
+
+export interface comment {
+  id: number;
+  profilePic: string;
+  name: string;
+  desc: string;
+  createdAt: string;
+}
+
+const Comments = ({ postId }: commentsProps) => {
   const { currentUser } = useContext(AuthContext);
 
   const { data, error, isFetching } = useQuery({
@@ -38,29 +50,32 @@ const Comments = ({ postId }) => {
 
   return (
     <div className="comments">
-      <div className="write">
-        <img
-          src={
-            currentUser.profilePic
-              ? process.env.API + '/upload/' + currentUser.profilePic
-              : DefaultProfile
-          }
-        />
-        <input
-          type="text"
-          value={desc}
-          onChange={(e) => {
-            setDesc(e.target.value);
-          }}
-          placeholder="write a comment"
-        />
-        <button onClick={handleClick}>Send</button>
-      </div>
+      {currentUser && (
+        <div className="write">
+          <img
+            src={
+              currentUser.profilePic
+                ? process.env.API + '/upload/' + currentUser.profilePic
+                : DefaultProfile
+            }
+          />
+          <input
+            type="text"
+            value={desc}
+            onChange={(e) => {
+              setDesc(e.target.value);
+            }}
+            placeholder="write a comment"
+          />
+          <button onClick={handleClick}>Send</button>
+        </div>
+      )}
+
       {isFetching
         ? 'Loading'
         : error
           ? 'Something went wrong'
-          : data.content.map((comment) => (
+          : data.content.map((comment: comment) => (
               <div key={`comment-${comment.id}`} className="comment">
                 <img
                   src={

@@ -9,9 +9,11 @@ interface WebSocketContextInterface {
   isWsConnected: boolean;
 }
 
-export const WebSocketContext = createContext<WebSocketContextInterface | null>(
-  null,
-);
+export const WebSocketContext = createContext<WebSocketContextInterface>({
+  wsMessage: '',
+  wsSentObj: ({}) => {},
+  isWsConnected: false,
+});
 
 export const WebSocketContextProvider = ({
   children,
@@ -21,7 +23,7 @@ export const WebSocketContextProvider = ({
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { currentUser } = useContext(AuthContext);
 
-  const handleMessageChange = (event) => {
+  const handleMessageChange = (event: { data: string }) => {
     setWsMessage(event.data);
   };
 

@@ -8,9 +8,9 @@ import { UserObj } from '../../libs/interfaces.js';
 import DefaultUserPic from '../../assets/user_profile.jpg';
 
 const RightBar = () => {
-  const [onLineFriendList, setOnlineFriendList] = useState([]);
+  const [onLineFriendList, setOnlineFriendList] = useState<number[]>([]);
   const { wsMessage, wsSentObj, isWsConnected } = useContext(WebSocketContext);
-  const [isUpdateFriendList, setIsUpdateFriendList] = useState(false);
+  const [isUpdateFriendList, setIsUpdateFriendList] = useState<boolean>(false);
   const { data } = useQuery({
     queryKey: ['friendsList'],
     queryFn: () => {
@@ -28,7 +28,9 @@ const RightBar = () => {
         if (isWsConnected) {
           wsSentObj({
             method: 'updateFriendList',
-            friendList: data.content.map((item) => item.followedUserId),
+            friendList: data.content.map(
+              (item: UserObj) => item.followedUserId,
+            ),
           });
           setIsUpdateFriendList(true);
         }
@@ -49,7 +51,11 @@ const RightBar = () => {
         }
       }
     } catch (err) {
-      console.log(err.message);
+      let errorMessage = 'Failed to do something exceptional';
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+      console.log(errorMessage);
     }
   }, [wsMessage, data]);
 
@@ -63,8 +69,8 @@ const RightBar = () => {
           {data &&
             data.content &&
             data.content
-              .filter((item) => onLineFriendList.includes(item.id))
-              .map((item) => (
+              .filter((item: UserObj) => onLineFriendList.includes(item.id))
+              .map((item: UserObj) => (
                 <div
                   onClick={() => setUserToChat(item)}
                   key={`online-${item.id}`}

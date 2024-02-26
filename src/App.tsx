@@ -17,11 +17,13 @@ import { DarkModeContext } from './context/darkModeContext';
 import { AuthContext } from './context/authContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './App.scss';
+import { Props } from './libs/interfaces';
 
 const queryClient = new QueryClient();
 
 function App() {
-  const { currentUser } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
+  const { currentUser } = authContext ? authContext : { currentUser: {} };
 
   const { darkMode } = useContext(DarkModeContext);
 
@@ -42,7 +44,7 @@ function App() {
     );
   };
 
-  const ProtectedRoute = ({ children }) => {
+  const ProtectedRoute = ({ children }: Props) => {
     if (!currentUser) {
       return <Navigate to="/login" />;
     }
