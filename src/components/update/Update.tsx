@@ -43,10 +43,8 @@ export const Update = ({ setOpenUpdate, user }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const coverUrl;
-    const profileUrl;
-    coverUrl = cover ? await upload(cover) : user.coverPic;
-    profileUrl = profile ? await upload(profile) : user.profilePic;
+    const coverUrl = cover ? await upload(cover) : user.coverPic;
+    const profileUrl = profile ? await upload(profile) : user.profilePic;
 
     mutation.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
     setOpenUpdate(false);
