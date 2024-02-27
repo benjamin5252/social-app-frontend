@@ -92,7 +92,10 @@ const Post = ({ post }: PostProps) => {
                   </span>
                 </div>
               </div>
-              <MoreHorizIcon onClick={() => setMenuOpen(!menuOpen)} />
+              <MoreHorizIcon
+                style={{ cursor: 'pointer' }}
+                onClick={() => setMenuOpen(!menuOpen)}
+              />
               {currentUser.id === post.userId && menuOpen && (
                 <button onClick={handleDelete}>delete</button>
               )}
