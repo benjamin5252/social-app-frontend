@@ -85,7 +85,7 @@ const Share = () => {
 
   const onProgress = (progress: AxiosProgressEvent) => {
     if(progress.total){
-      setUploadProgress((progress.loaded / progress.total) * 100);
+      setUploadProgress((progress.loaded / progress.total) * 100); //mui progress takes in 100 as full value
     }else{
       setUploadProgress(0);
     }
