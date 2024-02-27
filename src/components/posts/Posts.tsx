@@ -1,7 +1,7 @@
 import Post from '../post/Post';
 import './posts.scss';
 import { useQuery } from '@tanstack/react-query';
-import makeRequest from '../../axios';
+import makeRequest from '../../api/axios';
 import { AxiosResponse } from 'axios';
 import { PostObj } from '../../libs/interfaces';
 import CircularProgress from '@mui/material/CircularProgress';

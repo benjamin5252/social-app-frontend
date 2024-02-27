@@ -4,7 +4,7 @@ import LanguageIcon from '@mui/icons-material/Language';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Posts from '../../components/posts/Posts';
-import makeRequest from '../../axios';
+import makeRequest from '../../api/axios';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';

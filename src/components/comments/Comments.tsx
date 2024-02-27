@@ -1,7 +1,7 @@
 import { useContext, useState, MouseEvent } from 'react';
 import './comments.scss';
 import { AuthContext } from '../../context/authContext';
-import makeRequest from '../../axios';
+import makeRequest from '../../api/axios';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import moment from 'moment';
 import DefaultProfile from '../../assets/user_profile.jpg';

@@ -8,7 +8,7 @@ import Comments from '../comments/Comments';
 import { useState, useContext } from 'react';
 import moment from 'moment';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import makeRequest from '../../axios';
+import makeRequest from '../../api/axios';
 import { AuthContext } from '../../context/authContext';
 import DefaultProfile from '../../assets/user_profile.jpg';
 import TimeoutImg from '../timeoutImg/timeoutImg';

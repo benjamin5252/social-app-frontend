@@ -6,7 +6,7 @@ import {
   Dispatch,
 } from 'react';
 import './update.scss';
-import makeRequest from '../../axios';
+import makeRequest from '../../api/axios';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { UpdateUserObj, UserObj } from '../../libs/interfaces';

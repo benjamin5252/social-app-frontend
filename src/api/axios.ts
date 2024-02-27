@@ -3,6 +3,7 @@ import axios from 'axios';
 const makeRequest = axios.create({
   baseURL: process.env.API + '/api',
   withCredentials: true,
+  timeout: 5000
 });
 
 makeRequest.interceptors.response.use(

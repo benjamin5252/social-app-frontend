@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import authApi from '../api/auth';
 
 import { UserObj, ContextProviderProps } from '../libs/interfaces';
 
@@ -28,17 +29,13 @@ export const AuthContextProvider = ({ children }: ContextProviderProps) => {
   );
 
   const login = async (inputs: { username: string; password: string }) => {
-    const res = await axios.post(process.env.API + '/api/auth/login', inputs, {
-      withCredentials: true,
-    });
+    const res = await authApi.login(inputs)
     setCurrentUser(res.data.content);
     return res.data;
   };
 
   const logout = async () => {
-    await axios.post(process.env.API + '/api/auth/logout', {
-      withCredentials: true,
-    });
+    await authApi.logout()
     setCurrentUser(null);
   };
 

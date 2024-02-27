@@ -1,5 +1,5 @@
 import './rightBar.scss';
-import makeRequest from '../../axios.js';
+import makeRequest from '../../api/axios.js';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState, useContext } from 'react';
 import { WebSocketContext } from '../../context/webSocketContext.jsx';

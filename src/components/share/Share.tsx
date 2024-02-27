@@ -4,7 +4,7 @@ import ImageIcon from '../../assets/img.png';
 import { useContext, useState, MouseEvent, ChangeEvent } from 'react';
 import { AuthContext } from '../../context/authContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import makeRequest from '../../axios';
+import postApi from '../../api/post';
 import DefaultProfile from '../../assets/user_profile.jpg';
 import LinearProgress from '@mui/material/LinearProgress';
 
@@ -19,7 +19,7 @@ const Share = () => {
 
   const mutation = useMutation({
     mutationFn: (newPost: { desc: string; img: string }) => {
-      return makeRequest.post('/posts', newPost);
+      return postApi.addPost(newPost);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['posts'] });
@@ -94,19 +94,9 @@ const Share = () => {
   const upload = async (): Promise<string | undefined> => {
     try {
       if (file) {
-        const formData = new FormData();
         const resizedBlob = await resizeImageFile(file);
         if (resizedBlob) {
-          const resizedFile = new File([resizedBlob], 'image.png');
-          formData.append('file', resizedFile);
-          const uploadConfig = {
-            method: 'post',
-            url: '/upload',
-            timeout: 20 * 60 * 1000,
-            data: formData,
-            onUploadProgress: onProgress,
-          };
-          const res = await makeRequest.request(uploadConfig);
+          const res = await postApi.uploadImg(resizedBlob, onProgress);
           return res.data;
         }
       }
