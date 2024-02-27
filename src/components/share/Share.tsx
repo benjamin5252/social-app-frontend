@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import postApi from '../../api/post';
 import DefaultProfile from '../../assets/user_profile.jpg';
 import LinearProgress from '@mui/material/LinearProgress';
+import { AxiosProgressEvent } from 'axios';
 
 const Share = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -82,13 +83,13 @@ const Share = () => {
     });
   };
 
-  const onProgress = (progress: {
-    loaded: number;
-    total: number;
-    progress: number;
-    bytes: number;
-  }) => {
-    setUploadProgress((progress.loaded / progress.total) * 100);
+  const onProgress = (progress: AxiosProgressEvent) => {
+    if(progress.total){
+      setUploadProgress((progress.loaded / progress.total) * 100);
+    }else{
+      setUploadProgress(0);
+    }
+    
   };
 
   const upload = async (): Promise<string | undefined> => {

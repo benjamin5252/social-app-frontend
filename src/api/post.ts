@@ -1,13 +1,8 @@
 import makeRequest from './axios'
-
+import { AxiosProgressEvent } from 'axios';
 const postApi = {
     addPost: (newPost: { desc: string; img: string }) => makeRequest.post('/posts', newPost),
-    uploadImg: (blob: Blob, onProgress: (progress: {
-      loaded: number;
-      total: number;
-      progress: number;
-      bytes: number;
-    })=>void) => {
+    uploadImg: (blob: Blob, onProgress: (progress: AxiosProgressEvent)=>void) => {
       const formData = new FormData();
       
       const resizedFile = new File([blob], 'image.png');
