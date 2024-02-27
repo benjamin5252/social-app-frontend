@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import makeRequest from '../../axios';
 import { AxiosResponse } from 'axios';
 import { PostObj } from '../../libs/interfaces';
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface PostsProps {
   userId?: number;
@@ -27,7 +28,11 @@ const Posts = ({ userId }: PostsProps) => {
         if (error) {
           return 'Something went wrong';
         } else if (isFetching) {
-          return 'Loading';
+          return (
+            <div className="loadingContainer">
+              <CircularProgress />
+            </div>
+          );
         } else {
           return data.content.map((post: PostObj) => (
             <Post post={post} key={post.id} />

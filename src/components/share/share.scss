@@ -12,6 +12,13 @@
 
     .container {
       padding: 20px;
+
+      .uploadingText {
+        display: flex;
+        justify-content: center;
+        color: themed('textColor');
+        padding: 20px;
+      }
       .top {
         display: flex;
         align-items: center;

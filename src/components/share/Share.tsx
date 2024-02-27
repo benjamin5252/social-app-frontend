@@ -6,11 +6,13 @@ import { AuthContext } from '../../context/authContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import makeRequest from '../../axios';
 import DefaultProfile from '../../assets/user_profile.jpg';
+import LinearProgress from '@mui/material/LinearProgress';
 
 const Share = () => {
   const [file, setFile] = useState<File | null>(null);
   const [desc, setDesc] = useState('');
-
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [isSharing, setIsSharing] = useState<boolean>(false);
   const { currentUser } = useContext(AuthContext);
 
   const queryClient = useQueryClient();
@@ -23,11 +25,15 @@ const Share = () => {
       queryClient.invalidateQueries({ queryKey: ['posts'] });
       setDesc('');
       setFile(null);
+      setIsSharing(false);
+      setUploadProgress(100);
     },
   });
 
   const handleClick = async (e: MouseEvent) => {
     e.preventDefault();
+    setUploadProgress(0);
+    setIsSharing(true);
     let imgUrl: string | undefined = '';
     if (file) {
       imgUrl = await upload();
@@ -76,6 +82,15 @@ const Share = () => {
     });
   };
 
+  const onProgress = (progress: {
+    loaded: number;
+    total: number;
+    progress: number;
+    bytes: number;
+  }) => {
+    setUploadProgress((progress.loaded / progress.total) * 100);
+  };
+
   const upload = async (): Promise<string | undefined> => {
     try {
       if (file) {
@@ -84,7 +99,14 @@ const Share = () => {
         if (resizedBlob) {
           const resizedFile = new File([resizedBlob], 'image.png');
           formData.append('file', resizedFile);
-          const res = await makeRequest.post('/upload', formData);
+          const uploadConfig = {
+            method: 'post',
+            url: '/upload',
+            timeout: 20 * 60 * 1000,
+            data: formData,
+            onUploadProgress: onProgress,
+          };
+          const res = await makeRequest.request(uploadConfig);
           return res.data;
         }
       }
@@ -96,62 +118,75 @@ const Share = () => {
   return (
     currentUser && (
       <div className="share">
-        <div className="container">
-          <div className="top">
-            <div className="left">
-              <img
-                src={
-                  currentUser.profilePic
-                    ? process.env.API + '/upload/' + currentUser.profilePic
-                    : DefaultProfile
-                }
-                alt="DefaultProfile"
-              />
-              <input
-                type="text"
-                placeholder={`What's on your mind ${currentUser.name}?`}
-                value={desc}
-                onChange={(e) => setDesc(e.target.value)}
-              />
+        {isSharing ? (
+          <div className="container">
+            <div className="uploadingText">
+              <div>Uploading the post.</div>
             </div>
-            <div className="right">
-              {file && (
-                <img className="file" alt="" src={URL.createObjectURL(file)} />
-              )}
-            </div>
+            <LinearProgress variant="determinate" value={uploadProgress} />
           </div>
-          <hr />
-          <div className="bottom">
-            <div className="left">
-              <input
-                type="file"
-                id="file"
-                style={{ display: 'none' }}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                  if (e.target && e.target.files && e.target.files[0])
-                    setFile(e.target.files[0]);
-                }}
-              />
-              <label htmlFor="file">
-                <div className="item">
-                  <img src={ImageIcon} alt="" />
-                  <span>Add Image</span>
-                </div>
-              </label>
-              {/* <div className="item">
+        ) : (
+          <div className="container">
+            <div className="top">
+              <div className="left">
+                <img
+                  src={
+                    currentUser.profilePic
+                      ? process.env.API + '/upload/' + currentUser.profilePic
+                      : DefaultProfile
+                  }
+                  alt="DefaultProfile"
+                />
+                <input
+                  type="text"
+                  placeholder={`What's on your mind ${currentUser.name}?`}
+                  value={desc}
+                  onChange={(e) => setDesc(e.target.value)}
+                />
+              </div>
+              <div className="right">
+                {file && (
+                  <img
+                    className="file"
+                    alt=""
+                    src={URL.createObjectURL(file)}
+                  />
+                )}
+              </div>
+            </div>
+            <hr />
+            <div className="bottom">
+              <div className="left">
+                <input
+                  type="file"
+                  id="file"
+                  style={{ display: 'none' }}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    if (e.target && e.target.files && e.target.files[0])
+                      setFile(e.target.files[0]);
+                  }}
+                />
+                <label htmlFor="file">
+                  <div className="item">
+                    <img src={ImageIcon} alt="" />
+                    <span>Add Image</span>
+                  </div>
+                </label>
+                {/* <div className="item">
               <img src={Map} alt="" />
               <span>Add Place</span>
             </div> */}
-              {/* <div className="item">
+                {/* <div className="item">
               <img src={Friend} alt="" />
               <span>Tag Friends</span>
             </div> */}
-            </div>
-            <div className="right">
-              <button onClick={handleClick}>Share</button>
+              </div>
+              <div className="right">
+                <button onClick={handleClick}>Share</button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     )
   );
