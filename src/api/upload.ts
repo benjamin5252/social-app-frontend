@@ -17,14 +17,10 @@ const resizeImageFile = (blob: File): Promise<Blob | null> => {
     // Say the file is 1920x1080
     // divide max(w,h) by 256 to get factor
 
-    w = 320;
+    w = 200;
 
     h = w / aspectRatio;
 
-    if (h > window.innerHeight * 0.6) {
-      h = window.innerHeight * 0.6;
-      w = h * aspectRatio;
-    }
 
     const canvas = document.createElement('canvas');
     canvas.width = w;

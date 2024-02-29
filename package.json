@@ -9,8 +9,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "format": "prettier --write ./src",
-    "predeploy": "vite build",
-    "deploy": "cp -f storage/config/prod/.env .env && gh-pages -d dist",
+    "predeploy": "cp -f storage/config/prod/.env .env && vite build",
+    "deploy": "gh-pages -d dist",
     "dev_local": "cp -f storage/config/local/.env .env && vite",
     "dev_prod": "cp -f storage/config/prod/.env .env && vite"
   },
