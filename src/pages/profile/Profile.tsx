@@ -13,6 +13,7 @@ import Update from '../../components/update/Update';
 import DefaultProfile from '../../assets/user_profile.jpg';
 import { AxiosResponse } from 'axios';
 import userApi from '../../api/user';
+import relationshipApi from '../../api/relationship';
 
 const Profile = () => {
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -31,8 +32,8 @@ const Profile = () => {
   const { data: relationshipData, isFetching: rIsFetching } = useQuery({
     queryKey: ['relationship'],
     queryFn: () => {
-      return makeRequest
-        .get('/relationships?followedUserId=' + userId)
+      return relationshipApi
+        .getRelationship(userId)
         .then((res: AxiosResponse) => res.data);
     },
   });
@@ -40,11 +41,14 @@ const Profile = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: () => {
-      if (currentUser && relationshipData.content.includes(currentUser.id)) {
-        return makeRequest.delete('/relationships?followedUserId=' + userId);
-      } else {
-        return makeRequest.put('/relationships?followedUserId=' + userId);
+      if (userId) {
+        if (currentUser && relationshipData.content.includes(currentUser.id)) {
+          return relationshipApi.deleteRelationship(userId);
+        } else {
+          return relationshipApi.addRelationship(userId);
+        }
       }
+      return () => {};
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['relationship'] });
