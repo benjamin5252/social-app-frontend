@@ -55,10 +55,6 @@
       align-items: center;
       gap: 20px;
 
-      @include mobile {
-        display: none;
-      }
-
       .user {
         cursor: pointer;
         display: flex;
@@ -66,10 +62,6 @@
         gap: 10px;
         font-weight: 500;
         position: relative;
-
-        @include tablet {
-          display: none;
-        }
 
         img {
           width: 30px;

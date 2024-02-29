@@ -34,7 +34,7 @@ const Navbar = () => {
         </div> */}
       </div>
       <div className="right">
-        {currentUser && (
+        {/* {currentUser && (
           <Link
             to={`/profile/${currentUser.id}`}
             style={{
@@ -48,7 +48,7 @@ const Navbar = () => {
           </Link>
         )}
 
-        <NotificationsOutlinedIcon />
+        <NotificationsOutlinedIcon /> */}
         <div
           className="user"
           onClick={() => {
