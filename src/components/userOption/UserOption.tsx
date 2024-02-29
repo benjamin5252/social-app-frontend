@@ -29,7 +29,7 @@ function UserOption() {
           Logout
         </div>
         <div className="version">
-          v1.0.5
+          v1.0.6
         </div>
       </div>
     )

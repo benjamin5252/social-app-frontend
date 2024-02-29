@@ -169,7 +169,7 @@ const Profile = () => {
           </div>
           <Posts userId={userId ? parseInt(userId) : undefined} />
         </div>
-        {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={data} />}
+        {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={data?.content} />}
       </div>
     )
   );

@@ -8,6 +8,8 @@ export interface UserObj {
   followedUserId?: string | undefined;
   coverPic?: string | undefined;
   email? :string;
+  city?: string;
+  website?: string;
 }
 
 export interface UpdateUserObj {

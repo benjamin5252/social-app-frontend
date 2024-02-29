@@ -21,10 +21,10 @@ export const Update = ({ setOpenUpdate, user }: UpdateProps) => {
   // const [cover, setCover] = useState<File | null>(null);
   const [profile, setProfile] = useState<File | null>(null);
   const [texts, setTexts] = useState({
-    name: '',
-    city: '',
-    website: '',
-    email: '',
+    name: user.name,
+    city: user.city,
+    website: user.website,
+    email: user.email,
     password: '',
   });
 
