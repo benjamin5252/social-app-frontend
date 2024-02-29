@@ -1,11 +1,11 @@
 import { useContext, useState, MouseEvent } from 'react';
 import './comments.scss';
 import { AuthContext } from '../../context/authContext';
-import makeRequest from '../../api/axios';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import moment from 'moment';
 import DefaultProfile from '../../assets/user_profile.jpg';
 import { AxiosResponse } from 'axios';
+import commentApi from '../../api/comment';
 
 export interface commentsProps {
   postId: string;
@@ -25,8 +25,8 @@ const Comments = ({ postId }: commentsProps) => {
   const { data, error, isFetching } = useQuery({
     queryKey: ['comments'],
     queryFn: () => {
-      return makeRequest
-        .get('/comments?postId=' + postId)
+      return commentApi
+        .getComments(postId)
         .then((res: AxiosResponse) => res.data);
     },
   });
@@ -35,7 +35,7 @@ const Comments = ({ postId }: commentsProps) => {
   const [desc, setDesc] = useState('');
   const mutation = useMutation({
     mutationFn: (newComment: { desc: string; postId: string }) => {
-      return makeRequest.post('/comments', newComment);
+      return commentApi.addComment(newComment);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments'] });
