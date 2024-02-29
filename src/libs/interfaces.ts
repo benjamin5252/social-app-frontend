@@ -7,6 +7,7 @@ export interface UserObj {
   profilePic: string | undefined;
   followedUserId?: string | undefined;
   coverPic?: string | undefined;
+  email? :string;
 }
 
 export interface UpdateUserObj {
