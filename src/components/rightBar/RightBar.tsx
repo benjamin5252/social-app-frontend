@@ -6,18 +6,20 @@ import ChatBox from '../chatBox/ChatBox.js';
 import { UserObj } from '../../libs/interfaces.js';
 import DefaultUserPic from '../../assets/user_profile.jpg';
 import relationshipApi from '../../api/relationship.js';
+import { AuthContext } from '../../context/authContext.js';
 
 const RightBar = () => {
   const [onLineFriendList, setOnlineFriendList] = useState<number[]>([]);
   const { wsMessage, wsSentObj, isWsConnected } = useContext(WebSocketContext);
   const [isUpdateFriendList, setIsUpdateFriendList] = useState<boolean>(false);
+  const { currentUser } = useContext(AuthContext);
   const { data } = useQuery({
     queryKey: ['friendsList'],
-    queryFn: () => {
-      const req = relationshipApi.getFriendList().then((res) => res.data);
-
-      return req;
-    },
+    queryFn: () =>
+      relationshipApi.getFriendList().then((res) => {
+        console.log(res.data);
+        return res.data;
+      }),
   });
 
   useEffect(() => {
@@ -65,10 +67,15 @@ const RightBar = () => {
         <div className="container">
           <div className="item">
             <span>Online Friends</span>
-            {data &&
+            {currentUser &&
+              data &&
               data.content &&
               data.content
-                .filter((item: UserObj) => onLineFriendList.includes(item.id))
+                .filter(
+                  (item: UserObj) =>
+                    onLineFriendList.includes(item.id) &&
+                    item.id !== currentUser.id,
+                )
                 .map((item: UserObj) => (
                   <div
                     onClick={() => setUserToChat(item)}

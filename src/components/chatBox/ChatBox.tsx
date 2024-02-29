@@ -31,17 +31,18 @@ const ChatBox = ({
       }
       console.log(errorMessage);
     }
-  }, [wsMessage, receivedMsg]);
+  }, [wsMessage]);
 
-  const sendMsg = (msg: string) => {
+  const sendMsg = (e: MouseEvent) => {
+    e.preventDefault();
     if (isWsConnected) {
       const sendAt = Date.now();
-      if (msg && currentUser) {
+      if (msgToSend && currentUser) {
         setReceivedMsg([
           ...receivedMsg,
           {
             reply: 'sendChatMessage',
-            message: msg,
+            message: msgToSend,
             from: currentUser.id,
             to: friend.id,
             sendAt,
@@ -49,7 +50,7 @@ const ChatBox = ({
         ]);
         wsSentObj({
           method: 'sendChatMessage',
-          message: msg,
+          message: msgToSend,
           from: currentUser.id,
           to: friend.id,
           sendAt,
@@ -104,12 +105,14 @@ const ChatBox = ({
             </div>
           </div>
           <div className="editor">
-            <input
-              value={msgToSend}
-              onChange={(e) => setMsgToSend(e.target.value)}
-              type="text"
-            />
-            <button onClick={() => sendMsg(msgToSend)}>{'Send >'}</button>
+            <form>
+              <input
+                value={msgToSend}
+                onChange={(e) => setMsgToSend(e.target.value)}
+                type="text"
+              />
+              <button onClick={sendMsg}>{'Send >'}</button>
+            </form>
           </div>
         </>
       }

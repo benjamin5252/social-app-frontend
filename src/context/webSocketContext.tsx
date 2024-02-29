@@ -35,7 +35,6 @@ export const WebSocketContextProvider = ({
 
   useEffect(() => {
     const loginWs = async () => {
-      console.log('currentUser', currentUser);
       if (currentUser) {
         localStorage.setItem('user', JSON.stringify(currentUser));
         if (!(ws && ws.readyState === WebSocket.OPEN)) {
