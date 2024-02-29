@@ -8,12 +8,13 @@ import Comments from '../comments/Comments';
 import { useState, useContext } from 'react';
 import moment from 'moment';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import makeRequest from '../../api/axios';
 import { AuthContext } from '../../context/authContext';
 import DefaultProfile from '../../assets/user_profile.jpg';
 import TimeoutImg from '../timeoutImg/timeoutImg';
 import { MouseEvent } from 'react';
 import { PostObj } from '../../libs/interfaces';
+import likeApi from '../../api/like';
+import postApi from '../../api/post';
 
 interface PostProps {
   post: PostObj;
@@ -25,7 +26,7 @@ const Post = ({ post }: PostProps) => {
   const { data, error, isFetching } = useQuery({
     queryKey: ['likes', post.id],
     queryFn: () => {
-      return makeRequest.get('/likes/' + post.id).then((res) => res.data);
+      return likeApi.getLikes(post.id).then((res) => res.data);
     },
   });
 
@@ -33,9 +34,9 @@ const Post = ({ post }: PostProps) => {
   const mutation = useMutation({
     mutationFn: () => {
       if (currentUser && data.content.includes(currentUser.id)) {
-        return makeRequest.delete('/likes/' + post.id);
+        return likeApi.deleteLike(post.id);
       } else {
-        return makeRequest.put('/likes/' + post.id);
+        return likeApi.addLike(post.id);
       }
     },
     onSuccess: () => {
@@ -52,7 +53,7 @@ const Post = ({ post }: PostProps) => {
 
   const deleteMutation = useMutation({
     mutationFn: () => {
-      return makeRequest.delete('/posts/' + post.id);
+      return postApi.deletePost(post.id);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['posts'] });
@@ -92,19 +93,15 @@ const Post = ({ post }: PostProps) => {
                   </span>
                 </div>
               </div>
-              {
-                currentUser.id === post.userId &&<>
+              {currentUser.id === post.userId && (
+                <>
                   <MoreHorizIcon
                     style={{ cursor: 'pointer' }}
                     onClick={() => setMenuOpen(!menuOpen)}
                   />
-                  {menuOpen && (
-                    <button onClick={handleDelete}>delete</button>
-                  )}
-                </> 
-              }
-              
-              
+                  {menuOpen && <button onClick={handleDelete}>delete</button>}
+                </>
+              )}
             </div>
           )}
 

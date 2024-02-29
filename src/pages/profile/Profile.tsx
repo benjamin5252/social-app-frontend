@@ -12,6 +12,7 @@ import { useContext, useState, MouseEvent } from 'react';
 import Update from '../../components/update/Update';
 import DefaultProfile from '../../assets/user_profile.jpg';
 import { AxiosResponse } from 'axios';
+import userApi from '../../api/user';
 
 const Profile = () => {
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -22,9 +23,8 @@ const Profile = () => {
   const { data, error, isFetching } = useQuery({
     queryKey: ['user'],
     queryFn: () => {
-      return makeRequest
-        .get('/users/find/' + userId)
-        .then((res: AxiosResponse) => res.data);
+      if (userId)
+        return userApi.getUser(userId).then((res: AxiosResponse) => res.data);
     },
   });
 

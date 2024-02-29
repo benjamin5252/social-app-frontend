@@ -6,10 +6,11 @@ import {
   Dispatch,
 } from 'react';
 import './update.scss';
-import makeRequest from '../../api/axios';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { UpdateUserObj, UserObj } from '../../libs/interfaces';
+import userApi from '../../api/user';
+import uploadApi from '../../api/upload';
 
 interface UpdateProps {
   user: UserObj;
@@ -36,10 +37,10 @@ export const Update = ({ setOpenUpdate, user }: UpdateProps) => {
 
   const upload = async (file: File): Promise<string | undefined> => {
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      const res = await makeRequest.post('/upload', formData);
-      return res.data;
+      const res = await uploadApi.uploadImgFile(file);
+      if (res) {
+        return res.data;
+      }
     } catch (err) {
       console.log(err);
     }
@@ -48,7 +49,7 @@ export const Update = ({ setOpenUpdate, user }: UpdateProps) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (user: UpdateUserObj) => {
-      return makeRequest.put('/users', user);
+      return userApi.updateUser(user);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
@@ -121,13 +122,13 @@ export const Update = ({ setOpenUpdate, user }: UpdateProps) => {
             name="email"
             onChange={handleChange}
           />
-          <label>Password</label>
+          {/* <label>Password</label>
           <input
             type="text"
             value={texts.password}
             name="password"
             onChange={handleChange}
-          />
+          /> */}
           <label>Name</label>
           <input
             type="text"

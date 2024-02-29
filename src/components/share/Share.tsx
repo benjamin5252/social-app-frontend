@@ -8,6 +8,7 @@ import postApi from '../../api/post';
 import DefaultProfile from '../../assets/user_profile.jpg';
 import LinearProgress from '@mui/material/LinearProgress';
 import { AxiosProgressEvent } from 'axios';
+import uploadApi from '../../api/upload';
 
 const Share = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -42,62 +43,19 @@ const Share = () => {
     if (imgUrl) mutation.mutate({ desc, img: imgUrl });
   };
 
-  const resizeImageFile = (blob: File): Promise<Blob | null> => {
-    const blobUrl = URL.createObjectURL(blob);
-
-    return new Promise<HTMLImageElement>((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => resolve(img);
-      img.onerror = (err) => reject(err);
-      img.src = blobUrl;
-    }).then((img) => {
-      URL.revokeObjectURL(blobUrl);
-      // Limit to 256x256px while preserving aspect ratio
-      let [w, h] = [img.width, img.height];
-      const aspectRatio = w / h;
-      // Say the file is 1920x1080
-      // divide max(w,h) by 256 to get factor
-
-      w = 320;
-
-      h = w / aspectRatio;
-
-      if (h > window.innerHeight * 0.6) {
-        h = window.innerHeight * 0.6;
-        w = h * aspectRatio;
-      }
-
-      const canvas = document.createElement('canvas');
-      canvas.width = w;
-      canvas.height = h;
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, w, h);
-      }
-
-      return new Promise<Blob | null>((resolve) => {
-        canvas.toBlob((blob) => {
-          resolve(blob);
-        }); // implied image/png format
-      });
-    });
-  };
-
   const onProgress = (progress: AxiosProgressEvent) => {
-    if(progress.total){
+    if (progress.total) {
       setUploadProgress((progress.loaded / progress.total) * 100); //mui progress takes in 100 as full value
-    }else{
+    } else {
       setUploadProgress(0);
     }
-    
   };
 
   const upload = async (): Promise<string | undefined> => {
     try {
       if (file) {
-        const resizedBlob = await resizeImageFile(file);
-        if (resizedBlob) {
-          const res = await postApi.uploadImg(resizedBlob, onProgress);
+        const res = await uploadApi.uploadImgFile(file, onProgress);
+        if (res) {
           return res.data;
         }
       }
