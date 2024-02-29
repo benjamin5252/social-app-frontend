@@ -93,8 +93,8 @@ const Profile = () => {
                 ? ''
                 : error
                   ? 'Something went wrong'
-                  : data.content.coverPic
-                    ? process.env.API + '/upload/' + data.content.coverPic
+                  : data.content.profilePic
+                    ? process.env.API + '/upload/' + data.content.profilePic
                     : DefaultProfile
             }
             alt=""

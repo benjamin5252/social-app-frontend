@@ -32,6 +32,8 @@ const Navbar = () => {
     }
   };
 
+  console.log('currentUser', currentUser)
+
   return (
     <div className="navbar">
       <div className="left">
