@@ -24,11 +24,9 @@ const Navbar = () => {
 
   const handleSearch = async () => {
     try {
-      const res = await userApi.searchUser(searchStr);
-      if (res.data.result) {
-        setUserList(res.data.content);
+      if(searchStr){
+        setOpenSearchCard(true);
       }
-      setOpenSearchCard(true);
     } catch (err) {
       console.log(err);
     }
@@ -105,7 +103,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      {openSearchCard && <SearchCard userList={userList} />}
+      {openSearchCard && <SearchCard setSearchStr={setSearchStr} searchStr={searchStr} setOpen={setOpenSearchCard} />}
     </div>
   );
 };

@@ -28,6 +28,9 @@ function UserOption() {
         <div className="option" onClick={handleLogOut}>
           Logout
         </div>
+        <div className="version">
+          v1.0.0
+        </div>
       </div>
     )
   );

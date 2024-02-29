@@ -4,20 +4,21 @@ import LanguageIcon from '@mui/icons-material/Language';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Posts from '../../components/posts/Posts';
-import makeRequest from '../../api/axios';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
-import { useContext, useState, MouseEvent } from 'react';
+import { useContext, useState, MouseEvent, useEffect } from 'react';
 import Update from '../../components/update/Update';
 import DefaultProfile from '../../assets/user_profile.jpg';
 import { AxiosResponse } from 'axios';
 import userApi from '../../api/user';
 import relationshipApi from '../../api/relationship';
+import { LoadingUiContext } from '../../context/loadingUiContext/loadingUiContext';
 
 const Profile = () => {
   const [openUpdate, setOpenUpdate] = useState(false);
   const { currentUser } = useContext(AuthContext);
+  const { setMainLoading }  = useContext(LoadingUiContext);
 
   const userId = useParams().id;
 
@@ -59,6 +60,15 @@ const Profile = () => {
     e.preventDefault();
     mutation.mutate();
   };
+
+  useEffect(()=>{
+    if(isFetching || rIsFetching){
+      setMainLoading(true);
+    }else{
+      setMainLoading(false);
+    }
+    
+  },[isFetching, rIsFetching])
 
   return (
     currentUser && (

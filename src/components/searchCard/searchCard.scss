@@ -2,6 +2,7 @@
 
 .searchCard {
   @include themify($themes) {
+    transition: all 0.3s;
     padding: 20px;
     border-radius: 10px;
     position: absolute;

@@ -32,20 +32,20 @@
         border: 1px solid themed('border');
         border-radius: 5px;
         padding: 5px;
+        @include mobile {
+          display: none;
+        }
 
+        @include tablet {
+          width: 200px;
+        }
         input {
           border: none;
           width: 500px;
           background-color: transparent;
           color: themed('textColor');
 
-          @include mobile {
-            display: none;
-          }
-
-          @include tablet {
-            width: 200px;
-          }
+          
         }
       }
     }
