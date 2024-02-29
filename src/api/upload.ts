@@ -17,7 +17,7 @@ const resizeImageFile = (blob: File): Promise<Blob | null> => {
     // Say the file is 1920x1080
     // divide max(w,h) by 256 to get factor
 
-    w = 150;
+    w = 120;
 
     h = w / aspectRatio;
 

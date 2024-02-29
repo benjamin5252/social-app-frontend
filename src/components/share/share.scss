@@ -25,7 +25,7 @@
         justify-content: space-between;
         .left {
           display: flex;
-          align-items: center;
+          align-items: top;
           flex: 3;
           img {
             width: 40px;
@@ -33,13 +33,14 @@
             border-radius: 50%;
             object-fit: cover;
           }
-          input {
+          textarea {
             border: none;
             outline: none;
-            padding: 20px 10px;
+            padding: 10px 10px;
             background-color: transparent;
             width: 60%;
             color: themed('textColor');
+            resize: none;
           }
         }
 

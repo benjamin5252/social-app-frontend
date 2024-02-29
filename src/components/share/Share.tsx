@@ -39,8 +39,11 @@ const Share = () => {
     let imgUrl: string | undefined = '';
     if (file) {
       imgUrl = await upload();
+    
+      if (imgUrl) mutation.mutate({ desc, img: imgUrl });
+    }else{
+      mutation.mutate({ desc, img: imgUrl });
     }
-    if (imgUrl) mutation.mutate({ desc, img: imgUrl });
   };
 
   const onProgress = (progress: AxiosProgressEvent) => {
@@ -86,8 +89,8 @@ const Share = () => {
                   }
                   alt="DefaultProfile"
                 />
-                <input
-                  type="text"
+                <textarea 
+                  rows={2}
                   placeholder={`What's on your mind ${currentUser.name}?`}
                   value={desc}
                   onChange={(e) => setDesc(e.target.value)}
