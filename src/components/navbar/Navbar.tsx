@@ -11,16 +11,27 @@ import { AuthContext } from '../../context/authContext';
 import UserOption from '../userOption/UserOption';
 import DefaultProfile from '../../assets/user_profile.jpg';
 import userApi from '../../api/user';
+import SearchCard from '../searchCard/SearchCard';
+import { UserObj } from '../../libs/interfaces';
 
 const Navbar = () => {
   const { toggle, darkMode } = useContext(DarkModeContext);
   const { currentUser } = useContext(AuthContext);
   const [optionOpen, setOptionOpen] = useState(false);
   const [searchStr, setSearchStr] = useState<string>('');
+  const [openSearchCard, setOpenSearchCard] = useState<boolean>(false);
+  const [userList, setUserList] = useState<UserObj[]>([]);
 
   const handleSearch = async () => {
-    const res = await userApi.searchUser(searchStr);
-    console.log(res);
+    try {
+      const res = await userApi.searchUser(searchStr);
+      if (res.data.result) {
+        setUserList(res.data.content);
+      }
+      setOpenSearchCard(true);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -94,6 +105,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
+      {openSearchCard && <SearchCard userList={userList} />}
     </div>
   );
 };
