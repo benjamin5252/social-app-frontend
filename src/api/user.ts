@@ -9,6 +9,8 @@ const userApi = {
     coverPic?: string;
     profilePic?: string;
   }) => makeRequest.put('/users', userData),
+  searchUser: (searchStr: string) =>
+    makeRequest.get(`/users/search/${searchStr}`),
 };
 
 export default userApi;

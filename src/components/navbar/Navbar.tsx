@@ -3,17 +3,26 @@ import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { Link } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { DarkModeContext } from '../../context/darkModeContext';
 import { AuthContext } from '../../context/authContext';
 import UserOption from '../userOption/UserOption';
 import DefaultProfile from '../../assets/user_profile.jpg';
+import userApi from '../../api/user';
 
 const Navbar = () => {
   const { toggle, darkMode } = useContext(DarkModeContext);
   const { currentUser } = useContext(AuthContext);
   const [optionOpen, setOptionOpen] = useState(false);
+  const [searchStr, setSearchStr] = useState<string>('');
+
+  const handleSearch = async () => {
+    const res = await userApi.searchUser(searchStr);
+    console.log(res);
+  };
+
   return (
     <div className="navbar">
       <div className="left">
@@ -28,10 +37,24 @@ const Navbar = () => {
             onClick={toggle}
           />
         )}
-        {/* <div className="search">
+
+        <form
+          className="search"
+          action=""
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSearch();
+          }}
+        >
           <SearchOutlinedIcon />
-          <input type="text" placeholder="Search..." />
-        </div> */}
+          <input
+            type="text"
+            placeholder="Search..."
+            onChange={(e) => {
+              setSearchStr(e.target.value);
+            }}
+          />
+        </form>
       </div>
       <div className="right">
         {/* {currentUser && (
