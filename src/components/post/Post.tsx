@@ -74,8 +74,8 @@ const Post = ({ post }: PostProps) => {
               <div className="userInfo">
                 <img
                   src={
-                    currentUser.profilePic
-                      ? process.env.API + '/upload/' + currentUser.profilePic
+                    post.profilePic
+                      ? process.env.API + '/upload/' + post.profilePic
                       : DefaultProfile
                   }
                   alt=""
