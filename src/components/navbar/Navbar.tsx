@@ -24,7 +24,7 @@ const Navbar = () => {
 
   const handleSearch = async () => {
     try {
-      if(searchStr){
+      if (searchStr) {
         setOpenSearchCard(true);
       }
     } catch (err) {
@@ -32,7 +32,7 @@ const Navbar = () => {
     }
   };
 
-  console.log('currentUser', currentUser)
+  console.log('currentUser', currentUser);
 
   return (
     <div className="navbar">
@@ -60,7 +60,7 @@ const Navbar = () => {
           <SearchOutlinedIcon />
           <input
             type="text"
-            placeholder="Search..."
+            placeholder="Search User ID..."
             onChange={(e) => {
               setSearchStr(e.target.value);
             }}
@@ -105,7 +105,13 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      {openSearchCard && <SearchCard setSearchStr={setSearchStr} searchStr={searchStr} setOpen={setOpenSearchCard} />}
+      {openSearchCard && (
+        <SearchCard
+          setSearchStr={setSearchStr}
+          searchStr={searchStr}
+          setOpen={setOpenSearchCard}
+        />
+      )}
     </div>
   );
 };
