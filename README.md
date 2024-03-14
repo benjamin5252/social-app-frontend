@@ -17,19 +17,18 @@ https://github.com/benjamin5252/social-app-backend
 
 Function:
 
-Register、Login、Logout (restAPI + cookie)
-Add posts with picture upload (restAPI)
-Compress picture frontend (frontend file modification)
-Edit user info (restAPI)
-ChatBox (websocket)
-Follow and unfollow (restAPI)
-
+Register、Login、Logout (restAPI + cookie) <br />
+Add posts with picture upload (restAPI) <br />
+Compress picture frontend (frontend file modification) <br />
+Edit user info (restAPI) <br />
+ChatBox (websocket) <br />
+Follow and unfollow (restAPI) <br />
 
 Tech used:
 
-Frontend: Typescript、Vite、React、Material UI、@tanstack/react-query、axios、websocket
-Backend: TypeScript、NodeJs, ExpressJs, MySQL, websocket
-Deploy: GCP compute engine + Docker (Backend + Database), Frontend (Github page), DNS (CloudFlare)
+Frontend: Typescript、Vite、React、Material UI、@tanstack/react-query、axios、websocket <br />
+Backend: TypeScript、NodeJs, ExpressJs, MySQL, websocket <br />
+Deploy: GCP compute engine + Docker (Backend + Database), Frontend (Github page), DNS (CloudFlare) <br />
 
 
 
